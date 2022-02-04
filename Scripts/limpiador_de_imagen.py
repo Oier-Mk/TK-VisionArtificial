@@ -7,22 +7,16 @@ Original file is located at
     https://colab.research.google.com/drive/1w5rGHokRMtXveNXtl7DM_zAyEhSoji3Q
 """
 
-def limpiadorImagen(origen,destino):
+def limpiadorImagen(input):
   # Import libraries
   import cv2 as cv
   import numpy as np
   import glob
   import os
 
-  if os.path.isdir(destino):
-    print("Carpeta de salida {} ya existe".format(destino))
-  else:
-    os.mkdir(destino)
-    print("Carpeta de salida {} creada".format(destino))
 
-
-  filename = origen.split("/")[-1]
-  img_ini = cv.imread(origen)
+  filename = input.split("/")[-1]
+  img_ini = cv.imread(input)
 
   img_ini = cv.cvtColor(img_ini, cv.COLOR_BGR2RGB)
   img_ini = cv.cvtColor(img_ini, cv.IMREAD_GRAYSCALE)
@@ -61,13 +55,12 @@ def limpiadorImagen(origen,destino):
   dilation = cv.dilate(adp,kernel,iterations = 1)
   opening = cv.morphologyEx(dilation, cv.MORPH_OPEN, kernel)
 
-  imageFileName = filename.split("/")[-1]
+  imageFileName = input.split("/")[-1]
+  path = input.split("/")
+  path.pop(-1)
   nombre = ("mod_"+imageFileName)
-  print(os.path.join(destino,nombre))
-  cv.imwrite(os.path.join(destino,nombre),opening)
-
-  print("Proceso finalizado")
-
-origen = "/content/drive/Shareddrives/Teknei/Limpieza automatizada/entrenamiento.jpg"
-destino = "/content/drive/Shareddrives/Teknei/Limpieza automatizada/"
-limpiadorImagen(origen,destino)
+  path = '/'.join(path)
+  path = os.path.join(path,nombre)
+  cv.imwrite(path,opening)
+  print("Imagen limpia")
+  return path

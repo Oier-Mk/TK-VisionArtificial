@@ -73,8 +73,7 @@ def limpiadorImagenes(origen,destino):
 
     #nos quedamos con el nombre de la imagen y la almacenamos en la carpeta 
     imageFileName = filename.split("/")[-1]
-    cv.imwrite(os.path.join(destino,imageFileName),opening)
+    path = os.path.join(destino,imageFileName)
+    cv.imwrite(path,opening)
 
-  print("Proceso finalizado")
-
-limpiadorImagenes("/content/drive/Shareddrives/Teknei/Limpieza automatizada/Input/*","/content/drive/Shareddrives/Teknei/Limpieza automatizada/Output")
+  print("Imagenes limpias")

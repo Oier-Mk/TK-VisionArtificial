@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1P8siZL1PQiNWLcxrgsKjXHbrM_313qcN
 """
 
-def removeHorizontal(image, horizontal = True, vertical = True):
+def removeLines(image, horizontal = True, vertical = True):
   # Import libraries
   import cv2 as cv
   import numpy as np
@@ -46,10 +46,7 @@ def removeHorizontal(image, horizontal = True, vertical = True):
   path.pop(-1)
   nombre = ("mod_"+imageFileName)
   path = '/'.join(path)
-  print(os.path.join(path,nombre))
-  cv.imwrite(os.path.join(path,nombre),img_thresh_inv)
-
-from google.colab import drive
-drive.mount('/content/drive')
-
-removeHorizontal("/content/drive/Shareddrives/Teknei/Limpiador de lineas horizontales/mod_mod_entrenamiento.jpg")
+  path = os.path.join(path,nombre)
+  cv.imwrite(path,img_thresh_inv)
+  print("Lineas borradas")
+  return path

@@ -120,10 +120,7 @@ def encuadraImagen(input):
   path.pop(-1)
   nombre = ("mod_"+imageFileName)
   path = '/'.join(path)
-  print(os.path.join(path,nombre))
-  cv2.imwrite(os.path.join(path,nombre),ref)
-
-from google.colab import drive
-drive.mount('/content/drive')
-
-encuadraImagen('/content/drive/Shareddrives/Teknei/Encuadre de imagen/mod_entrenamiento.jpg')
+  path = os.path.join(path,nombre)
+  cv2.imwrite(path,ref)
+  print("Encuadre finalizado")
+  return path
