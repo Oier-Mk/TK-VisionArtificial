@@ -52,13 +52,15 @@ def limpiadorImagen(input):
   adp = cv.adaptiveThreshold(img_rgb_higher, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, 11, 7)
 
   kernel = np.ones((1,1),np.uint8)
-  dilation = cv.dilate(adp,kernel,iterations = 1)
+  dilation = cv.dilate(adp,kernel,iterations = 3)
   opening = cv.morphologyEx(dilation, cv.MORPH_OPEN, kernel)
+  cierre = cv.morphologyEx(opening, cv.MORPH_CLOSE, kernel)
+  dilation2 = cv.dilate(cierre,kernel,iterations = 3)
 
   imageFileName = input.split("/")[-1]
   path = input.split("/")
   path.pop(-1)
-  nombre = ("mod_"+imageFileName)
+  nombre = ("clean_"+imageFileName)
   path = '/'.join(path)
   path = os.path.join(path,nombre)
   cv.imwrite(path,opening)

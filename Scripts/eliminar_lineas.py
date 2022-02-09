@@ -44,7 +44,7 @@ def removeLines(image, horizontal = True, vertical = True):
   imageFileName = image.split("/")[-1]
   path = image.split("/")
   path.pop(-1)
-  nombre = ("mod_"+imageFileName)
+  nombre = ("remLines_"+imageFileName)
   path = '/'.join(path)
   path = os.path.join(path,nombre)
   cv.imwrite(path,img_thresh_inv)

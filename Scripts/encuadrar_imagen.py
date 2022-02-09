@@ -106,21 +106,24 @@ def encuadraImagen(input):
       if len(approx) == 4:
           screenCnt = approx
           break
-  
-  cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
-  
-  # Transformación de perspectiva
-  warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
-  # Procesamiento binario
-  warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
-  ref = cv2.adaptiveThreshold(warped, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 7)
+  try:
+      cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
+      # Transformación de perspectiva
+      warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
+      # Procesamiento binario
+      warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
+      ref = cv2.adaptiveThreshold(warped, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 7)
 
-  imageFileName = input.split("/")[-1]
-  path = input.split("/")
-  path.pop(-1)
-  nombre = ("mod_"+imageFileName)
-  path = '/'.join(path)
-  path = os.path.join(path,nombre)
-  cv2.imwrite(path,ref)
-  print("Encuadre finalizado")
+      imageFileName = input.split("/")[-1]
+      path = input.split("/")
+      path.pop(-1)
+      nombre = ("boxed_"+imageFileName)
+      path = '/'.join(path)
+      path = os.path.join(path,nombre)
+      cv2.imwrite(path,ref)
+      print("Encuadre finalizado")
+  except:
+    print("No se detecta un cuadrado en la imagen")
+  
+  
   return path
