@@ -30,3 +30,5 @@ input2 = "/Users/mentxaka/Documents/Trabajo/TK - Vision Artificial/Imagenes/matr
 getText(input2)
 input3 = "/Users/mentxaka/Documents/Trabajo/TK - Vision Artificial/Imagenes/audiq7.jpeg"
 getText(input3)
+input4 = "/Users/mentxaka/Documents/Trabajo/TK - Vision Artificial/Imagenes/audiq7_focus.png"
+getText(input4)
