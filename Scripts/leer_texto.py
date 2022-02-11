@@ -20,4 +20,4 @@ def readText(path):
   extractedInformation = pytesseract.image_to_string(img_read)
   return extractedInformation
 
-print(readText("/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/matriculas/imagen_4.png"))
+#print(readText("/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/matriculas/imagen_4.png"))

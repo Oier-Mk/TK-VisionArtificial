@@ -2,7 +2,7 @@ import os
 import argparse
 import time
 import cv2
-import pytesseract
+from leer_texto import readText
 
 
 def textDetect(file):
@@ -19,8 +19,8 @@ def textDetect(file):
     masked_img = cv2.bitwise_and(blur, blur, mask=mask)            # Se hace un AND de la imagen consigo misma aplicando la mascara
     ret, new_img = cv2.threshold(masked_img, 180, 255, cv2.THRESH_BINARY) # Binariza la imagen resultante del AND y se invierte
     # Solo para debug mostramos los pasos
-    cv2.imwrite('mascara.jpg',mask)
-    cv2.imwrite('imagen_para_contornos.jpg',new_img)
+    #cv2.imwrite('mascara.jpg',mask)
+    #cv2.imwrite('imagen_para_contornos.jpg',new_img)
 
     # Se obtienen los contornos de la imagen. Un contorno es una curva que une puntos continuos por tener el mismo color o intensidad
     contours, hierarchy = cv2.findContours(new_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
@@ -44,13 +44,20 @@ def textDetect(file):
             ROI_number += 1
 
 
+def textRecognition(file):
     #formo una lista con las imagenes de la ultima carpeta creada
-    listadeimagenes = os.listdir(path+"/matriculas")
+    listadeimagenes = os.listdir(path)
 
-    extractedInformation = "$"
+    print(listadeimagenes)
+
+    extractedInformation = "Imprimimos la matricula\n"
+
     for i in listadeimagenes: 
         try:
-            extractedInformation += pytesseract.image_to_string(i) + "\n"
+            pathAbsoluto = path + i
+            txt = readText(pathAbsoluto)
+            if "\n" in txt:
+                extractedInformation += txt+"\n"
         except:
             print("no se ha podido leer nada de la imagen "+ i.split('/')[-1])
 
@@ -85,8 +92,11 @@ if __name__ == '__main__':
 
 '''
 
+path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coche.jpeg"
 
-textDetect("/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coche.jpeg")
+textDetect(path)
 
+path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/matriculas/"
 
+textRecognition(path)
 
