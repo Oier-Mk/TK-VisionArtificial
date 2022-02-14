@@ -10,8 +10,13 @@ Original file is located at
 import numpy as np
 import cv2
 import os
+    
 
 def resize(image, width=None, height=None, inter=cv2.INTER_AREA):
+    import numpy as np
+    import cv2
+    import os
+
     dim = None
     (h, w) = image.shape[:2]
     if width is None and height is None:
@@ -27,6 +32,10 @@ def resize(image, width=None, height=None, inter=cv2.INTER_AREA):
 
 # Clasifica los cuatro vértices del contorno obtenido en el paso anterior en el orden de arriba a la izquierda, arriba a la derecha, abajo a la derecha, abajo a la izquierda
 def order_points(pts):
+    import numpy as np
+    import cv2
+    import os
+    
     # Un total de 4 puntos de coordenadas
     rect = np.zeros((4, 2), dtype = "float32")
 
@@ -45,6 +54,10 @@ def order_points(pts):
 
 # Transformación de perspectiva.
 def four_point_transform(image, pts):
+    import numpy as np
+    import cv2
+    import os
+    
     # Obtener coordenadas de entrada
     rect = order_points(pts)
     (tl, tr, br, bl) = rect
@@ -72,13 +85,14 @@ def four_point_transform(image, pts):
     # Devuelve el resultado transformado
     return warped
 
-def encuadraImagen(input):
+def encuadraImagen(file):
   import numpy as np
   import cv2
   import os
 
+
   # Leer entrada
-  image = cv2.imread(input)
+  image = cv2.imread(file)
   # Las coordenadas también cambiarán lo mismo
   ratio = image.shape[0] / 500.0
   orig = image.copy()
@@ -114,16 +128,22 @@ def encuadraImagen(input):
       warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
       ref = cv2.adaptiveThreshold(warped, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 7)
 
+      if not os.path.isdir(path+"/encuadrada"):
+        os.mkdir(path+"/encuadrada")
+
       imageFileName = input.split("/")[-1]
       path = input.split("/")
       path.pop(-1)
-      nombre = ("boxed_"+imageFileName)
+      nombre = ("encuadrada/boxed_"+imageFileName)
       path = '/'.join(path)
       path = os.path.join(path,nombre)
       cv2.imwrite(path,ref)
       print("Encuadre finalizado")
+      return path
+
   except:
     print("No se detecta un cuadrado en la imagen")
   
   
-  return path
+
+#encuadraImagen("/Users/mentxaka/Desktop/mascara_matricula.jpeg")
