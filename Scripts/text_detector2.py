@@ -56,19 +56,18 @@ def textDetect(file):
 
 
 
-def readText(path):
-    print(path)
-    img_read = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    extractedInformation = pytesseract.image_to_string(img_read)
-    return extractedInformation
 
+def readText(path):
+    img_read = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    extractedInformation = pytesseract.image_to_string(img_read, lang='spa')
+    return extractedInformation
 
 
 def textRecognition(path):
     #formo una lista con las imagenes de la ultima carpeta creada
     listadeimagenes = os.listdir(path)
-
-    print(listadeimagenes)
+    print(path.split("/")[-1])
+    #print(listadeimagenes)
 
     extractedInformation = "Imprimimos la matricula\n"
 
@@ -84,7 +83,7 @@ def textRecognition(path):
             else:
                 print("No se encuentra el fichero {}".format(pathAbsoluto))
         except:
-            traceback.print_exc()
+            #traceback.print_exc()
             print("no se ha podido leer texto de la imagen "+ i.split('/')[-1])
 
 
@@ -117,7 +116,6 @@ if __name__ == '__main__':
 
 '''
 
-'''
 
 #FUNCIONA, SACA TODOS LOS RECTANGULOS
 
@@ -131,10 +129,10 @@ for i in listadeimagenes:
     try:
         textDetect(path+i)
     except:
-        traceback.print_exc()
+        #traceback.print_exc()
         print("no se ha podido detectar nada en  " + i)
 
-'''
+
 
 path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches/rectangulos/"
 
