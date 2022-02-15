@@ -5,6 +5,8 @@ import cv2
 import pytesseract
 import re 
 import traceback
+import numpy as np
+from collections import Counter
 
 
 def textDetect(file):
@@ -59,7 +61,9 @@ def textDetect(file):
 
 def readText(path):
     img_read = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    extractedInformation = pytesseract.image_to_string(img_read, lang='spa', config='--psm 13 --oem 3 -c tessedit_char_whitelist=0123456789BCDFGHJKLMNPQRSTWXYZAEIOU')
+    # kernel = np.ones((5,5),np.uint8)
+    # erosion = cv2.erode(img_read,kernel,iterations = 1)
+    extractedInformation = pytesseract.image_to_string(img_read, lang='spa', config='--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789BCDFGHJKLMNPQRSTWXYZAEIOU')
     return extractedInformation
 
 
@@ -85,23 +89,22 @@ def textRecognition(path):
                 print("No se encuentra el fichero {}".format(pathAbsoluto))
             
         except:
-            #traceback.print_exc()
+            traceback.print_exc()
             print("no se ha podido leer texto de la imagen "+ i.split('/')[-1])
 
     if extractedInformation == "":
         extractedInformation += "ERROR\n"
-    # letras = 'ABCDEFGHIJKLMNOPQRSTUWXYZ'
-    # numeros = '0123456789'
-    # extractedInformation = extractedInformation[:-1]
-    # if len(extractedInformation) == 8:
-    #     print(re.search(extractedInformation[-3:],letras))
-    #     if re.search(extractedInformation[-3:],letras):
-    #         print("letras")
-    #         if extractedInformation[:5] in numeros:
-    #             print("NUMEROS")
-    #             if extractedInformation[0] == '1' or extractedInformation[0] == 'L':
-    #                 print("pop")
-    #                 extractedInformation.pop(0)
+    letras = 'ABCDEFGHIJKLMNOPQRSTUWXYZ'
+    numeros = '0123456789'
+    extractedInformation = extractedInformation[:-1]
+    if len(extractedInformation) == 8:
+        A = Counter(numeros)
+        B = Counter(extractedInformation[:-3])
+        if (A&B)==B:
+            A = Counter(letras)
+            B = Counter(extractedInformation[5:])
+            if (A&B) == B:
+                extractedInformation = extractedInformation[1:]
     texto =  "Imprimimos la matricula\n" + extractedInformation
 
     print(texto)
@@ -134,7 +137,5 @@ def main():
     
 
 if __name__ == '__main__':
-    start = time.time()
     main()
-    end = time.time()
-    print("Process complete in {0:.2f} seconds".format(end-start))
+    #textRecognition("/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches/rectangulos/rectangulos_Leon_0478LFR/")
