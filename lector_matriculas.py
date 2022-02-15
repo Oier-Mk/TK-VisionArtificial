@@ -138,4 +138,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    #textRecognition("/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches/rectangulos/rectangulos_Leon_0478LFR/")
