@@ -10,6 +10,7 @@ from collections import Counter
 
 
 def textDetect(file):
+    if file.split('/')[-1] == '.DS_Store': return
     path = file.split("/")
     nombre = path[-1]
     nombre = nombre.split(".")[0]
@@ -63,7 +64,7 @@ def readText(path):
     img_read = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     # kernel = np.ones((5,5),np.uint8)
     # erosion = cv2.erode(img_read,kernel,iterations = 1)
-    extractedInformation = pytesseract.image_to_string(img_read, lang='spa', config='--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789BCDFGHJKLMNPQRSTWXYZAEIOU')
+    extractedInformation = pytesseract.image_to_string(img_read, lang='spa', config='--psm 13 --oem 3 -c tessedit_char_whitelist=0123456789BCDFGHJKLMNPQRSTWXYZAEIOU')
     return extractedInformation
 
 
@@ -137,4 +138,7 @@ def main():
     
 
 if __name__ == '__main__':
-    main()
+    #main()
+    import platform
+    sistema = platform.system()
+    print("Estamos en {}".format(sistema))
