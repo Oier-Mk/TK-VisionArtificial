@@ -128,17 +128,17 @@ def encuadraImagen(file):
       warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
       ref = cv2.adaptiveThreshold(warped, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 7)
 
-      if not os.path.isdir(path+"/encuadrada"):
-        os.mkdir(path+"/encuadrada")
+    #   if not os.path.isdir(path+"/encuadrada"):
+    #     os.mkdir(path+"/encuadrada")
 
       imageFileName = input.split("/")[-1]
       path = input.split("/")
       path.pop(-1)
-      nombre = ("encuadrada/boxed_"+imageFileName)
+      nombre = ("boxed_"+imageFileName)
       path = '/'.join(path)
       path = os.path.join(path,nombre)
       cv2.imwrite(path,ref)
-      print("Encuadre finalizado")
+      #print("Encuadre finalizado")
       return path
 
   except:

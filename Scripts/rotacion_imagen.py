@@ -44,5 +44,5 @@ def alignImage(path):
   nombre = ("rotated_"+imageFileName)
   path = '/'.join(path)
   cv.imwrite(os.path.join(path,nombre),rotated)
-  print("Rotacion finalizada")
+  #print("Rotacion finalizada")
   return path

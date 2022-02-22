@@ -79,11 +79,15 @@ def textRecognition(path):
         try:
             pathAbsoluto = path + sep + i            
             if os.path.exists(pathAbsoluto) and os.path.isfile(pathAbsoluto):
-                txt = readText(pathAbsoluto)
-                txt = txt.upper()
-                txt = re.sub(r'[^A-Z0-9]', '', txt)
-                if (len(txt)>4):
-                    extractedInformation += txt+"\n"
+                try:
+                    #pathAbsoluto = encuadraImagen(pathAbsoluto)
+                    txt = readText(pathAbsoluto)
+                    txt = txt.upper()
+                    txt = re.sub(r'[^A-Z0-9]', '', txt)
+                    if (len(txt)>4):
+                        extractedInformation += txt+"\n"
+                except:
+                    pass
             else:
                 print("No se encuentra el fichero {}".format(pathAbsoluto))
             
@@ -110,9 +114,8 @@ def textRecognition(path):
 
 def main():
 
-    #FUNCIONA, SACA TODOS LOS RECTANGULOS
-
-    path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\Imagenes\coches"
+    #path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\Imagenes\coches"
+    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches"
 
     listadeimagenes = os.listdir(path)
 
@@ -125,7 +128,8 @@ def main():
             traceback.print_exc()
             print("no se ha podido detectar nada en  " + i)
 
-    path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\Imagenes\coches\rectangulos"
+    #path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\Imagenes\coches\rectangulos"
+    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches/rectangulos"
 
     listadedirectorios = os.listdir(path)
 
