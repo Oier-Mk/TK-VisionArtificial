@@ -115,7 +115,7 @@ def textRecognition(path):
 def main():
 
     #path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\Imagenes\coches"
-    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches"
+    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/images"
 
     listadeimagenes = os.listdir(path)
 
@@ -129,7 +129,7 @@ def main():
             print("no se ha podido detectar nada en  " + i)
 
     #path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\Imagenes\coches\rectangulos"
-    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches/rectangulos"
+    path = path+"/rectangulos"
 
     listadedirectorios = os.listdir(path)
 
