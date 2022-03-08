@@ -1,0 +1,26 @@
+<annotation>
+	<folder>lego3</folder>
+	<filename>croped12_231920.jpg</filename>
+	<path>/Users/jbagnato/PycharmProjects/detectaobjetos/images/lego3/croped12_231920.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>4512</width>
+		<height>4512</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>lego</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>2722</xmin>
+			<ymin>112</ymin>
+			<xmax>4009</xmax>
+			<ymax>3139</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>lego2</folder>
+	<filename>resized13_105811.jpg</filename>
+	<path>/Users/jbagnato/PycharmProjects/detectaobjetos/images/lego2/resized13_105811.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>832</width>
+		<height>832</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>lego</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>321</xmin>
+			<ymin>181</ymin>
+			<xmax>504</xmax>
+			<ymax>521</ymax>
+		</bndbox>
+	</object>
+</annotation>

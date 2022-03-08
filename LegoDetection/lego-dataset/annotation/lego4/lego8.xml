@@ -1,0 +1,26 @@
+<annotation>
+	<folder>lego</folder>
+	<filename>lego8.jpg</filename>
+	<path>/Users/jbagnato/PycharmProjects/detectaobjetos/images/lego/lego8.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>4512</width>
+		<height>4512</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>lego</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1641</xmin>
+			<ymin>1940</ymin>
+			<xmax>2917</xmax>
+			<ymax>3725</ymax>
+		</bndbox>
+	</object>
+</annotation>
