@@ -14,71 +14,74 @@ import shutil
 import cv2
 
 # path = "/Users/mentxaka/KaggleCoches/coches/video.MOV" #path de Oier
-# path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\KaggleCoches\coches\video.MOV" #path de Eneko
+# path de Eneko
+path = "KaggleCoches\\coches\\video_coches.mp4"
 
-#pathVideoFrames = "/Users/mentxaka/KaggleCoches/coches/videoFrames/" #path de Oier
-#pathVideoFrames = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\KaggleCoches\coches\videoFrames\" #path de Eneko
-# cap = cv2.VideoCapture(path)
+# pathVideoFrames = "/Users/mentxaka/KaggleCoches/coches/videoFrames/" #path de Oier
+pathVideoFrames = "KaggleCoches\\coches\\videoFrames\\"  # path de Eneko
+cap = cv2.VideoCapture(path)
 # # Read until video is completed
-# cont = 0
-# while(cap.isOpened()):
-#   # Capture frame-by-frame
-#     ret, frame = cap.read()
-#     if  ret == True:
-#         if cont % 5 == 0:
-#             cv2.imwrite(pathVideoFrames+str(cont)+".jpeg",frame)
-#             print(cont%5)
- 
-#         cont = cont+1
-#         print(cont)
-#     else:
-#         break
+cont = 0
+while(cap.isOpened()):
+   # Capture frame-by-frame
+    ret, frame = cap.read()
+    if ret == True:
+        if cont % 5 == 0:
+            cv2.imwrite(pathVideoFrames+str(cont)+".jpeg", frame)
+            print(cont % 5)
+    else:
+        break
+    cont = cont+1
+    print(cont)
 
-
-# print("fin deteccion frames") 
+# print("fin deteccion frames")
 
 # path = "/Users/mentxaka/KaggleCoches/coches/videoFrames/*" #path de Oier
-# path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\KaggleCoches\coches\videoFrames\*" #path de Eneko
+path = "KaggleCoches\\coches\\videoFrames\\*" #path de Eneko
 
-#yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
-yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
+# yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+yoloPath = r"C:\Users\eneko\yolov5"  # path yolo de Eneko
 
-#weightsPath = '/Users/mentxaka/KaggleCoches/weights/best-3.pt' #path de los pesos de Oier
-weightsPath = r'C:\Users\eneko\GitHub\TK-VisionArtificial2\KaggleCoches\weights\best-3.pt' #path de los pesos de Eneko
+# weightsPath = '/Users/mentxaka/KaggleCoches/weights/best-3.pt' #path de los pesos de Oier
+# path de los pesos de Eneko
+weightsPath = "KaggleCoches\\weights\\best-3.pt"
 
 # Model
-model = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
+model = torch.hub.load(
+    yoloPath, 'custom', path=weightsPath, source='local')  # default
 reader = prepareReadEasy()
 
-# #folder reading
-# imagefiles = glob.glob(path)
-# imagefiles.sort()
-
-# print(imagefiles)
-
-
-# for image in imagefiles:
-    
-#     # Inference
-#     results = model(image)
-
-#     # Results
-
-#     data = results.crop(save=True)
-
-#path = "/Users/mentxaka/KaggleCoches/runs/detect/exp*" #path de detecciones de Oier
-path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\KaggleCoches\runs\detect\exp*" #path de detecciones de Eneko
-
 #folder reading
+imagefiles = glob.glob(path)
+imagefiles.sort()
+
+print("IMAGEFILES")
+print(imagefiles)
+
+
+for image in imagefiles:
+
+     # Inference
+     results = model(image)
+
+     # Results
+
+     data = results.crop(save=True)
+
+# path = "/Users/mentxaka/KaggleCoches/runs/detect/exp*" #path de detecciones de Oier
+# path de detecciones de Eneko
+path = "KaggleCoches\\runs\\detect\\exp*"
+
+# folder reading
 carpetas = glob.glob(path)
 carpetas.sort()
 
 print(carpetas)
 lectura = ""
 
-#dst_path = "/Users/mentxaka/"+"KaggleCoches" + os.path.sep + "results" + os.path.sep #path de Oier
-dst_path = r"C:\Users\eneko\GitHub\TK-VisionArtificial2\KaggleCoches" + os.path.sep + "results" + os.path.sep #path de Eneko
-#crear carpeta
+# dst_path = "/Users/mentxaka/"+"KaggleCoches" + os.path.sep + "results" + os.path.sep #path de Oier
+dst_path = "KaggleCoches\\results\\"  # path de Eneko
+# crear carpeta
 if not os.path.isdir(dst_path):
     os.mkdir(dst_path)
     print("Carpeta de salida {} creada".format(dst_path))
@@ -90,22 +93,21 @@ for path in carpetas:
     print("pathCrops = "+pathCrops)
 
     imagefiles = glob.glob(pathCrops)
-    imagefiles.sort() 
-    
-    print(imagefiles)
+    imagefiles.sort()
 
+    print(imagefiles)
 
     for image in imagefiles:
         lectura += "nombre foto " + image.split(os.path.sep)[-1] + "\n"
-        #lectura de matricula
+        # lectura de matricula
         for text in readEasy(reader, image):
             lectura += text[1]
-        
+
         lectura += "\n"
 
         print(lectura)
 
-        #mover carpeta
+        # mover carpeta
         shutil.move(image, dst_path)
 
     try:
@@ -113,14 +115,8 @@ for path in carpetas:
     except OSError as e:
         print("Error: %s : %s" % (path, e.strerror))
 
-#pathText = "/Users/mentxaka/"+"KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" #path text de Oier
-pathText = "C:\Users\eneko\GitHub\TK-VisionArtificial2\KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" #path text de Eneko
+# pathText = "/Users/mentxaka/"+"KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" #path text de Oier
+pathText = "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt"  # path text de Eneko
 
 with open(pathText, 'w') as f:
     f.write(lectura)
-
-
-    
-
-
-
