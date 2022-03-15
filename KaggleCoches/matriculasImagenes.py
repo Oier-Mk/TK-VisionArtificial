@@ -63,7 +63,6 @@ def folderReading(path, model):
 
     coordenadas = []
     for image in imagefiles:
-        print(image)
         try:
             # Inference
             results = model(image)
@@ -109,15 +108,14 @@ yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 model, reader = loadModel(yoloPath)
 
-# #IMAGENES        
+#IMAGENES        
 # path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
-# path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*"
 
-# #VIDEO
+#VIDEO
 # path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"video.MOV" 
 # video2Frames(path)
-#path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+# path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
 
-#folderReading(path, model)
+folderReading(path, model)
 path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
 textReading(path,reader)
