@@ -43,7 +43,7 @@ def video2Frames(path):
     # Capture frame-by-frame
         ret, frame = cap.read()
         if ret == True:
-            if cont % 5 == 0:
+            if cont % 10 == 0:
                 cv2.imwrite(pathVideoFrames+str(cont)+".jpeg", frame)
         else: 
             break
@@ -85,20 +85,25 @@ def textReading(path,reader):
     #folder reading
     results = glob.glob(path)
     results.sort()
-    lectura = ""
+    lectura = []
 
     for image in results:
         try:
-            lectura += "nombre foto " + image.split(os.path.sep)[-1] + "\n"
             #lectura de matricula
+            lecturaParcial = ""
             for text in readEasy(reader, image):
-                lectura += text[1]
-            
-            lectura += "\n"
-            pathText = "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" #path text de Oier
+                lecturaParcial += text[1]
+            lectura.append(lecturaParcial)
+            pathText = "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
         except:
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
     print("Lectura del OCR completada")
+
+    lectura = list(dict.fromkeys(lectura))
+    print(lectura)
+    prov = "" 
+    for ele in lectura: 
+        prov += (ele + "\n")
 
     with open(pathText, 'w') as f:
         f.write(lectura)
@@ -108,14 +113,15 @@ yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 model, reader = loadModel(yoloPath)
 
-#IMAGENES        
+# #IMAGENES        
 # path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
 
 #VIDEO
-# path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"video.MOV" 
+# path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"video_coches.mp4"
 # video2Frames(path)
-# path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
 
 folderReading(path, model)
-path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
+path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/results/crops/*"
+#path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
 textReading(path,reader)
