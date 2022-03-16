@@ -12,6 +12,10 @@ import os
 import glob
 from leer_texto import prepareReadEasy, readEasy
 import shutil
+from datetime import datetime
+
+
+
 
 def loadModel(yoloPath):
 
@@ -44,7 +48,10 @@ def video2Frames(path):
         ret, frame = cap.read()
         if ret == True:
             if cont % 10 == 0:
-                cv2.imwrite(pathVideoFrames+str(cont)+".jpeg", frame)
+                now = datetime.now()
+                path = pathVideoFrames+str(now)+".jpeg"
+                cv2.imwrite(path, frame)
+                print(f"imagen {now} ha sido recortada" )
         else: 
             break
         cont = cont+1
@@ -86,27 +93,25 @@ def textReading(path,reader):
     results = glob.glob(path)
     results.sort()
     lectura = []
-
     for image in results:
         try:
             #lectura de matricula
-            lecturaParcial = ""
+            lecturaParcial = image.split(os.path.sep)[-1] + "\t"
             for text in readEasy(reader, image):
                 lecturaParcial += text[1]
             lectura.append(lecturaParcial)
-            pathText = "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
         except:
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
     print("Lectura del OCR completada")
 
-    lectura = list(dict.fromkeys(lectura))
-    print(lectura)
+    #lectura = list(dict.fromkeys(lectura))
     prov = "" 
     for ele in lectura: 
         prov += (ele + "\n")
-
+    
+    pathText = "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
     with open(pathText, 'w') as f:
-        f.write(lectura)
+        f.write(prov)
 
 
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
@@ -117,8 +122,8 @@ model, reader = loadModel(yoloPath)
 # path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
 
 #VIDEO
-# path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"video_coches.mp4"
-# video2Frames(path)
+path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
+video2Frames(path)
 path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
 
 folderReading(path, model)
