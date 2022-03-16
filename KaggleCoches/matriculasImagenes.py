@@ -13,6 +13,7 @@ import glob
 from leer_texto import prepareReadEasy, readEasy
 import shutil
 from datetime import datetime
+import re
 
 
 
@@ -50,6 +51,7 @@ def video2Frames(path):
             if cont % 10 == 0:
                 now = datetime.now()
                 path = pathVideoFrames+str(now)+".jpeg"
+                print(path)
                 cv2.imwrite(path, frame)
                 print(f"imagen {now} ha sido recortada" )
         else: 
@@ -92,6 +94,16 @@ def getRepIndexes(array, element):
         if (element == ele): indexes.append(idx)
     return indexes
 
+def deleteIncorrectPlates(arrayPlates, arrayNames):
+    reg = r"[0-9]{4}[a-zA-Z]{3}"
+    index = 0
+    for plate in arrayPlates:
+        if not re.match(reg, plate):
+            arrayPlates.remove(plate)
+            arrayNames.remove(arrayNames[index])
+        index += 1
+    return arrayPlates, arrayNames
+
 def textReading(path,reader):   
     print("Lectura del OCR comenzadad")
 
@@ -112,6 +124,8 @@ def textReading(path,reader):
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
     print("Lectura del OCR completada")
     
+    lecturaResultado, lecturaNombre = deleteIncorrectPlates(lecturaResultado,lecturaNombre)
+
     for plate in lecturaResultado:
         indexes = getRepIndexes(lecturaResultado, plate)
         indexes.pop(0)
@@ -120,27 +134,27 @@ def textReading(path,reader):
             lecturaNombre.pop(idx)
 
     prov = "" 
-    for i, nombre in enumerate(lecturaNombre): 
-        prov += (nombre + "\t" + lecturaResultado[i] +"\n")
+    for i, name in enumerate(lecturaNombre): 
+        prov += (name +"\t"+lecturaResultado[i] +"\n")
     
     pathText = "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
     with open(pathText, 'w') as f:
         f.write(prov)
 
 
-yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
-#yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
+#yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 model, reader = loadModel(yoloPath)
 
 # #IMAGENES        
-# path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
+#path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
 
 #VIDEO
-# path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
-# video2Frames(path)
-# path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
-
-# folderReading(path, model)
-path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/results/crops/*"
-#path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
+path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"video_coches.mp4"
+print(path)
+video2Frames(path)
+path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+folderReading(path, model)
+#path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/results/crops/*"
+path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
 textReading(path,reader)
