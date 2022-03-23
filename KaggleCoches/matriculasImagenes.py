@@ -113,21 +113,21 @@ def remEquals(lecturaNombre, lecturaResultado):
             lecturaResultado.pop(idx)
             lecturaNombre.pop(idx)
     print("iguales borrados")
-    return(lecturaResultado,lecturaNombre)
+    return(lecturaNombre,lecturaResultado)
         
 
 def deleteIncorrectPlates(lecturaNombre,lecturaResultado):    
-    
+    provNombre = []
+    provResultado = []
     for idx, val in enumerate(lecturaResultado):
         match = re.search('([1234567890]{4})([BCDFGHJKLMNPQRSTWXYZ]{3})', val) 
         if match:
             print(f"YES! We have a match! idx = {idx} $$ val = {lecturaResultado[idx]}")
-        if not match:
-            lecturaResultado.pop(idx)
-            lecturaNombre.pop(idx)
-            
-    print(lecturaResultado)
-    return(lecturaResultado,lecturaNombre)
+            provNombre.append(lecturaNombre[idx])
+            provResultado.append(lecturaResultado[idx])
+
+    print(provResultado)
+    return(provNombre,provResultado)
 
 def textReading(path,reader):   
     print("Lectura del OCR comenzada")
@@ -149,15 +149,15 @@ def textReading(path,reader):
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
     print("Lectura del OCR completada")
 
-    return(lecturaResultado,lecturaNombre)
+    return(lecturaNombre,lecturaResultado)
 
-def regExp(lecturaResultado,lecturaNombre): 
+def regExp(lecturaNombre,lecturaResultado): 
 
     lecturaResultado = remSpace(lecturaResultado)
 
-    lecturaResultado,lecturaNombre = deleteIncorrectPlates(lecturaNombre,lecturaResultado)
+    lecturaNombre,lecturaResultado = deleteIncorrectPlates(lecturaNombre,lecturaResultado)
     
-    lecturaResultado,lecturaNombre = remEquals(lecturaNombre,lecturaResultado)
+    lecturaNombre,lecturaResultado = remEquals(lecturaNombre,lecturaResultado)
 
     prov = "" 
     for i, name in enumerate(lecturaNombre): 
