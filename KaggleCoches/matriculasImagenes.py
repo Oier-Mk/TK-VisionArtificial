@@ -94,12 +94,17 @@ def getRepIndexes(array, element):
     return indexes
 
 def remSpace(lecturaResultado):
+    print("borrando espacio")
     prov = []
     for idx, plate in enumerate(lecturaResultado):
         prov.append(plate.replace(" ",""))
     lecturaResultado = prov
+    print("espacios borrados")
+    return(lecturaResultado)
+
 
 def remEquals(lecturaNombre, lecturaResultado):
+    print("borrando iguales")
     for plate in lecturaResultado:
         indexes = getRepIndexes(lecturaResultado, plate)
         lecturaResultado[indexes[0]].replace(" ","")
@@ -107,22 +112,22 @@ def remEquals(lecturaNombre, lecturaResultado):
         for idx in indexes:
             lecturaResultado.pop(idx)
             lecturaNombre.pop(idx)
+    print("iguales borrados")
+    return(lecturaResultado,lecturaNombre)
         
 
-def deleteIncorrectPlates(lecturaNombre,lecturaResultado):
-        
-    # Three digit number followed by space followed by two digit number
-    pattern = '(\d{4})([BCDFGHJKLMNPQRSTWXYZ]{3})'
-
-    for i, val in enumerate(lecturaResultado):
-
-        match = re.search(pattern, val) 
-
+def deleteIncorrectPlates(lecturaNombre,lecturaResultado):    
+    
+    for idx, val in enumerate(lecturaResultado):
+        match = re.search('([1234567890]{4})([BCDFGHJKLMNPQRSTWXYZ]{3})', val) 
         if match:
-            lecturaResultado[i] = match.group()
-        else:
-            lecturaResultado.pop(i)
-            lecturaNombre.pop(i)
+            print(f"YES! We have a match! idx = {idx} $$ val = {lecturaResultado[idx]}")
+        if not match:
+            lecturaResultado.pop(idx)
+            lecturaNombre.pop(idx)
+            
+    print(lecturaResultado)
+    return(lecturaResultado,lecturaNombre)
 
 def textReading(path,reader):   
     print("Lectura del OCR comenzada")
@@ -143,13 +148,16 @@ def textReading(path,reader):
         except:
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
     print("Lectura del OCR completada")
-    
 
-    remSpace(lecturaResultado)
-    
-    remEquals(lecturaResultado,lecturaNombre)
+    return(lecturaResultado,lecturaNombre)
 
-    deleteIncorrectPlates(lecturaResultado,lecturaNombre)
+def regExp(lecturaResultado,lecturaNombre): 
+
+    lecturaResultado = remSpace(lecturaResultado)
+
+    lecturaResultado,lecturaNombre = deleteIncorrectPlates(lecturaNombre,lecturaResultado)
+    
+    lecturaResultado,lecturaNombre = remEquals(lecturaNombre,lecturaResultado)
 
     prov = "" 
     for i, name in enumerate(lecturaNombre): 
@@ -158,6 +166,8 @@ def textReading(path,reader):
     pathText = "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
     with open(pathText, 'w') as f:
         f.write(prov)
+
+    print("txt generado")
 
 
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
@@ -170,9 +180,17 @@ model, reader = loadModel(yoloPath)
 #VIDEO
 # path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
 # video2Frames(path)
-path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+# path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
 
-folderReading(path, model)
+# folderReading(path, model)
+
 #path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/results/crops/*"
+
+import gc
+gc.collect(generation=2)
+gc.collect(generation=1)
+gc.collect(generation=0)
+
 path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
-textReading(path,reader)
+lecturaNombres, lectureResultados = textReading(path,reader)
+regExp(lecturaNombres, lectureResultados)

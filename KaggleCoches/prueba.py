@@ -1,92 +1,67 @@
 
-# Program to extract numbers from a string
-string1 = '0919HHCsdjfghjakflkasdfklj'
-string2 = 'asdfasd0919HHCsdjfghjakflkasdfklj'
-string3 = '0919HHCsdjf!s2ghjakflkasdfklj'
-string4 = '091]9HHCsdjfghjakflkasdfklj'
-lecturaResultado = [string1,string2,string3,string4]
-lecturaNombre = ["1","2","3","4"]
+# def matchFormat(lecturaNombre,lecturaResultado):
+#     import re   
 
-# def getRepIndexes(array, element):
-#     indexes = [] 
-#     if element not in array: return None
-#     for idx, ele in enumerate(array):
-#         if (element == ele): indexes.append(idx)
-#     return indexes
+#     for i, val in enumerate(lecturaResultado):
 
-# prov = []
-# for idx, plate in enumerate(lecturaResultado):
-#     prov.append(plate.replace(" ",""))
-# lecturaResultado = prov
+#         match = re.search('([1234567890]{4})([BCDFGHJKLMNPQRSTWXYZ]{3})', val) 
 
+#         if match:
+#             lecturaResultado[i] = match.group()
+#         else:
+#             lecturaResultado.pop(i)
+#             lecturaNombre.pop(i)
 
-import re
-
-def matchFormat(lecturaNombre,lecturaResultado):
-        
-    # Three digit number followed by space followed by two digit number
-    pattern = '(\d{4})([BCDFGHJKLMNPQRSTWXYZ]{3})'
-
-    for i, val in enumerate(lecturaResultado):
-
-        match = re.search(pattern, val) 
-
-        if match:
-            lecturaResultado[i] = match.group()
-        else:
-            lecturaResultado.pop(i)
-            lecturaNombre.pop(i)
-
-    return lecturaNombre, lecturaResultado
-
-lecturaNombre, lecturaResultado = matchFormat(lecturaNombre,lecturaResultado)
-
-print(lecturaNombre)
-print(lecturaResultado)
-
+#     return lecturaNombre, lecturaResultado
+    
 # # Program to extract numbers from a string
-# string1 = '0919HHCsdjfghjakflkasdfklj'
-# string2 = 'asdfasd0919HHCsdjfghjakflkasdfklj'
-# string3 = '0919HHCsdjf!s2ghjakflkasdfklj'
-# string4 = '091]9HHCsdjfghjakflkasdfklj'
-# lecturaResultado = [string1,string2,string3,string4]
-# lecturaNombre = ["1","2","3","4"]
+# string1 = '0919HH'
+# string2 = 'HGG1234'
+# string3 = '123D4GG'
+# string4 = 'H20'
+# string5 = '5088FWK'
 
-# import re
+# lecturaResultado = [string1,string2,string3,string4,string5]
+# lecturaNombre = ["1","2","3","4","5"]
 
-# def matchFormat(string):
-        
-#     # Three digit number followed by space followed by two digit number
-#     pattern = '(\d{4})([BCDFGHJKLMNPQRSTWXYZ]{3})'
+# lecturaNombre, lecturaResultado = matchFormat(lecturaNombre,lecturaResultado)
 
-#     # match variable contains a Match object.
-#     match = re.search(pattern, string) 
-
-#     if match:
-#         print(match.group())
-#         return(True,match.group())
-#     else:
-#         print("pattern not found")
-#         return(False,None)
-
-
-# for i,val in enumerate(lecturaResultado):
-#     t,v = matchFormat(val)
-#     if(t): lecturaResultado[i] = v
-#     if(not t):
-#         lecturaResultado.pop(i)
-#         lecturaNombre.pop(i)
 # print(lecturaNombre)
 # print(lecturaResultado)
 
+import re
+
+#Check if the string starts with "The" and ends with "Spain":
+
+string1 = "loHMC"
+string2 = "0919`HHC"
+string3 = "9950EFX"
+string4 = "77950EFX"
+string5 = "DOM"
+string6 = "	"
+string7 = "7LCZD"
+string8 = "8674CZD"
+string9 = "7FNM"
+string10 = "FNM3477"
+string11 = "8477FNM"
+string12 = "0477FhV"
+string13 = "ELLZHCX"
+string14 = "33HVV"
+string15 = "0133HVV"
+string16 = "0133AVV"
+string17 = "TV"
+string18 = "EL64JNR"
+string19 = "1464JNR"
+string20 = "4464JNR"
+string21 = "JNRLL6L"
 
 
-# # string1 = '0919HHCsdjfghjakflkasdfklj'
-# # matchFormat(string1)
-# # string2 = 'asdfasd0919HHCsdjfghjakflkasdfklj'
-# # matchFormat(string2)
-# # string3 = '0919HHCsdjf!s2ghjakflkasdfklj'
-# # matchFormat(string3)
-# # string4 = '091]9HHCsdjfghjakflkasdfklj'
-# # matchFormat(string4)
 
+lecturaResultado = [string1,string2,string3,string4,string5,string6,string7,string8,string9,string10,string11,string12,string13,string14,string15,string16,string17,string18,string19,string20,string21]
+
+for idx, val in enumerate(lecturaResultado):
+  match = re.search('([1234567890]{4})([BCDFGHJKLMNPQRSTWXYZ]{3})', val) 
+  if match:
+    print(f"YES! We have a match! idx = {idx} $$ val = {lecturaResultado[idx]}")
+  else:
+    print("No match")
