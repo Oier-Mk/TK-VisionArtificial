@@ -51,7 +51,6 @@ def video2Frames(path):
             if cont % 10 == 0:
                 now = datetime.now()
                 path = pathVideoFrames+str(now)+".jpeg"
-                print(path)
                 cv2.imwrite(path, frame)
                 print(f"imagen {now} ha sido recortada" )
         else: 
@@ -94,18 +93,39 @@ def getRepIndexes(array, element):
         if (element == ele): indexes.append(idx)
     return indexes
 
-def deleteIncorrectPlates(arrayPlates, arrayNames):
-    reg = r"[0-9]{4}[a-zA-Z]{3}"
-    index = 0
-    for plate in arrayPlates:
-        if not re.match(reg, plate):
-            arrayPlates.remove(plate)
-            arrayNames.remove(arrayNames[index])
-        index += 1
-    return arrayPlates, arrayNames
+def remSpace(lecturaResultado):
+    prov = []
+    for idx, plate in enumerate(lecturaResultado):
+        prov.append(plate.replace(" ",""))
+    lecturaResultado = prov
+
+def remEquals(lecturaNombre, lecturaResultado):
+    for plate in lecturaResultado:
+        indexes = getRepIndexes(lecturaResultado, plate)
+        lecturaResultado[indexes[0]].replace(" ","")
+        indexes.pop(0)
+        for idx in indexes:
+            lecturaResultado.pop(idx)
+            lecturaNombre.pop(idx)
+        
+
+def deleteIncorrectPlates(lecturaNombre,lecturaResultado):
+        
+    # Three digit number followed by space followed by two digit number
+    pattern = '(\d{4})([BCDFGHJKLMNPQRSTWXYZ]{3})'
+
+    for i, val in enumerate(lecturaResultado):
+
+        match = re.search(pattern, val) 
+
+        if match:
+            lecturaResultado[i] = match.group()
+        else:
+            lecturaResultado.pop(i)
+            lecturaNombre.pop(i)
 
 def textReading(path,reader):   
-    print("Lectura del OCR comenzadad")
+    print("Lectura del OCR comenzada")
 
     #folder reading
     results = glob.glob(path)
@@ -124,14 +144,12 @@ def textReading(path,reader):
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
     print("Lectura del OCR completada")
     
-    lecturaResultado, lecturaNombre = deleteIncorrectPlates(lecturaResultado,lecturaNombre)
 
-    for plate in lecturaResultado:
-        indexes = getRepIndexes(lecturaResultado, plate)
-        indexes.pop(0)
-        for idx in indexes:
-            lecturaResultado.pop(idx)
-            lecturaNombre.pop(idx)
+    remSpace(lecturaResultado)
+    
+    remEquals(lecturaResultado,lecturaNombre)
+
+    deleteIncorrectPlates(lecturaResultado,lecturaNombre)
 
     prov = "" 
     for i, name in enumerate(lecturaNombre): 
@@ -142,18 +160,18 @@ def textReading(path,reader):
         f.write(prov)
 
 
-#yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
-yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
+yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+#yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 model, reader = loadModel(yoloPath)
 
 # #IMAGENES        
 #path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
 
 #VIDEO
-path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"video_coches.mp4"
-print(path)
-video2Frames(path)
+# path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
+# video2Frames(path)
 path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+
 folderReading(path, model)
 #path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/results/crops/*"
 path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
