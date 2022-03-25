@@ -77,15 +77,16 @@ def folderReading(path, model):
             # Inference
             results = model(image)
             # Results
-            x0, y0, x1, y1, _, _ = results.xyxy[0][0].numpy().astype(int)        
+            x0, y0, x1, y1, _, _ = results.xyxy[0][0].cpu().numpy().astype(int)        
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
             imageOCV = cv2.imread(image)
             cropped_image = imageOCV[y00:y11, x00:x11] 
             cv2.imwrite(os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+image.split(os.path.sep)[-1], cropped_image)
         
-        except:
-            print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas reconocibles")
-        
+        except Exception:
+          import traceback
+          print(traceback.format_exc())
+
     print("Lectura de carpeta completada")
 
 def getRepIndexes(array, element):
