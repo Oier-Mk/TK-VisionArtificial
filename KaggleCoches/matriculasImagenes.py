@@ -20,6 +20,7 @@ import re
 
 def loadModel(yoloPath):
 
+    print("frames comenzados")
     weightsPath = "KaggleCoches"+os.path.sep+"weights"+os.path.sep+"best-3.pt" #path de los pesos de Oier
 
     # Model load 
@@ -34,11 +35,12 @@ def loadModel(yoloPath):
         os.mkdir(dst_path+os.path.sep+"frames")
         os.mkdir(dst_path+os.path.sep+"crops")
 
-    
+    print("frames finalizados")
+
     return model, reader
 
 def video2Frames(path):
-    print("Lectura del video comenzadad")
+    print("Lectura del video comenzada")
 
     pathVideoFrames = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep 
     cap = cv2.VideoCapture(path)
@@ -62,7 +64,7 @@ def video2Frames(path):
         
 
 def folderReading(path, model):
-    print("Lectura de carpeta comenzadad")
+    print("Lectura de carpeta comenzada")
 
     #folder reading
     imagefiles = glob.glob(path)
@@ -107,11 +109,10 @@ def remEquals(lecturaNombre, lecturaResultado):
     print("borrando iguales")
     for plate in lecturaResultado:
         indexes = getRepIndexes(lecturaResultado, plate)
-        lecturaResultado[indexes[0]].replace(" ","")
         indexes.pop(0)
-        for idx in indexes:
-            lecturaResultado.pop(idx)
-            lecturaNombre.pop(idx)
+        for i,idx in enumerate(indexes):
+            lecturaResultado.pop(idx-i)
+            lecturaNombre.pop(idx-i)
     print("iguales borrados")
     return(lecturaNombre,lecturaResultado)
         
@@ -145,8 +146,10 @@ def textReading(path,reader):
             for text in readEasy(reader, image):
                 prov+=text[1]
             lecturaResultado.append(prov)
+            print("la imagen "+image.split(os.path.sep)[-1]+" SI tiene matrículas legibless")
         except:
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
+    print(len(lecturaResultado))
     print("Lectura del OCR completada")
 
     return(lecturaNombre,lecturaResultado)
@@ -183,14 +186,6 @@ model, reader = loadModel(yoloPath)
 # path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
 
 # folderReading(path, model)
-
-#path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/results/crops/*"
-
-import gc
-gc.collect(generation=2)
-gc.collect(generation=1)
-gc.collect(generation=0)
-
 path = "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
 lecturaNombres, lectureResultados = textReading(path,reader)
 regExp(lecturaNombres, lectureResultados)
