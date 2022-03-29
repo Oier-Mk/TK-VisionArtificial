@@ -20,10 +20,9 @@ def readTesseract(path):
   extractedInformation = pytesseract.image_to_string(img_read)
   return extractedInformation
 
-#print(readText("/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/Imagenes/coches/rectangulos/rectangulos_matricula/imagen_1.png"))
-
 def prepareReadEasy():
   import easyocr
   return easyocr.Reader(['en']) # this needs to run only once to load the model into memory
+  
 def readEasy(reader, path):
   return reader.readtext(path)
