@@ -181,7 +181,7 @@ def regExp(lecturaNombre,lecturaResultado):
     print("txt generado")
 
 
-#yoloPath = '/content/yolov5'
+#yoloPath = '/content/yolov5' #path yolo de collab
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 model, reader = loadModel(yoloPath)
@@ -190,9 +190,9 @@ model, reader = loadModel(yoloPath)
 #path = os.getcwd()+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
 
 #VIDEO
-# path = os.getcwd() + os.path.sep + "coches" + os.path.sep + "parkingUD.MOV"
-# video2Frames(path)
-# path = os.getcwd() + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep + "*"
+path = os.getcwd() + os.path.sep + "coches" + os.path.sep + "parkingUD.MOV"
+video2Frames(path)
+path = os.getcwd() + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep + "*"
 
 # folderReading(path, model)
 path = os.getcwd() + os.path.sep + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + "*" 
