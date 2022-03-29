@@ -21,13 +21,15 @@ import re
 def loadModel(yoloPath):
 
     print("frames comenzados")
-    weightsPath = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"weights"+os.path.sep+"best-3.pt" 
-
+    #weightsPath = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"weights"+os.path.sep+"best-3.pt" 
+    #weightsPath = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"weights"+os.path.sep+"best-3.pt" 
+    weightsPath = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/weights/best-3.pt"
     # Model load 
     model = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
     reader = prepareReadEasy()
 
-    dst_path =  os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep
+    #dst_path =  os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep
+    dst_path =  "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep
 
     #crear carpeta
     if not os.path.isdir(dst_path):
@@ -42,7 +44,9 @@ def loadModel(yoloPath):
 def video2Frames(path):
     print("Lectura del video comenzada")
 
-    pathVideoFrames = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep 
+    #pathVideoFrames = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep 
+    pathVideoFrames = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep 
+    
     cap = cv2.VideoCapture(path)
     # # Read until video is completed
     cont = 0
@@ -81,7 +85,9 @@ def folderReading(path, model):
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
             imageOCV = cv2.imread(image)
             cropped_image = imageOCV[y00:y11, x00:x11] 
-            cv2.imwrite(os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+image.split(os.path.sep)[-1], cropped_image)
+
+            #cv2.imwrite(os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+image.split(os.path.sep)[-1], cropped_image)
+            cv2.imwrite("TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+image.split(os.path.sep)[-1], cropped_image)
         
         except Exception:
           import traceback
@@ -167,14 +173,15 @@ def regExp(lecturaNombre,lecturaResultado):
     for i, name in enumerate(lecturaNombre): 
         prov += (name +"\t"+lecturaResultado[i] +"\n")
     
-    pathText = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
+    #pathText = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
+    pathText = "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
     with open(pathText, 'w') as f:
         f.write(prov)
 
     print("txt generado")
 
-yoloPath = '/content/yolov5'
-#yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+#yoloPath = '/content/yolov5'
+yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 model, reader = loadModel(yoloPath)
 
@@ -182,11 +189,14 @@ model, reader = loadModel(yoloPath)
 #path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
 
 #VIDEO
-path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
+#path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
+path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
 video2Frames(path)
-path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+#path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+path = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
 
 folderReading(path, model)
-path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
+#path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
+path = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
 lecturaNombres, lectureResultados = textReading(path,reader)
 regExp(lecturaNombres, lectureResultados)
