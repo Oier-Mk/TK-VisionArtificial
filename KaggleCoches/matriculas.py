@@ -14,6 +14,7 @@ from leer_texto import prepareReadEasy, readEasy
 import shutil
 from datetime import datetime
 import re
+import traceback
 
 
 
@@ -22,14 +23,14 @@ def loadModel(yoloPath):
 
     print("frames comenzados")
     #weightsPath = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"weights"+os.path.sep+"best-3.pt" 
-    #weightsPath = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"weights"+os.path.sep+"best-3.pt" 
-    weightsPath = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/weights/best-3.pt"
+    weightsPath = os.getcwd() + os.path.sep + "weights"+os.path.sep+"best-3.pt" 
+    #weightsPath = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/KaggleCoches/weights/best-3.pt"
     # Model load 
     model = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
     reader = prepareReadEasy()
 
     #dst_path =  os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep
-    dst_path =  "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep
+    dst_path =  os.getcwd() + os.path.sep + "results" + os.path.sep
 
     #crear carpeta
     if not os.path.isdir(dst_path):
@@ -45,7 +46,7 @@ def video2Frames(path):
     print("Lectura del video comenzada")
 
     #pathVideoFrames = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep 
-    pathVideoFrames = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep 
+    pathVideoFrames = os.getcwd() + os.path.sep+"results" + os.path.sep + "frames" + os.path.sep 
     
     cap = cv2.VideoCapture(path)
     # # Read until video is completed
@@ -87,10 +88,9 @@ def folderReading(path, model):
             cropped_image = imageOCV[y00:y11, x00:x11] 
 
             #cv2.imwrite(os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+image.split(os.path.sep)[-1], cropped_image)
-            cv2.imwrite("TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+image.split(os.path.sep)[-1], cropped_image)
-        
+            cv2.imwrite(os.getcwd() + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + image.split(os.path.sep)[-1], cropped_image)
+         
         except Exception:
-          import traceback
           print(traceback.format_exc())
 
     print("Lectura de carpeta completada")
@@ -154,9 +154,9 @@ def textReading(path,reader):
                 prov+=text[1]
             lecturaResultado.append(prov)
             print("la imagen "+image.split(os.path.sep)[-1]+" SI tiene matrículas legibless")
-        except:
+        except Exception:
+            print(traceback.format_exc())
             print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
-    print(len(lecturaResultado))
     print("Lectura del OCR completada")
 
     return(lecturaNombre,lecturaResultado)
@@ -174,11 +174,12 @@ def regExp(lecturaNombre,lecturaResultado):
         prov += (name +"\t"+lecturaResultado[i] +"\n")
     
     #pathText = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
-    pathText = "TK-VisionArtificial" + os.path.sep + "KaggleCoches" + os.path.sep + "results" + os.path.sep + "log.txt" 
+    pathText = os.getcwd() + os.path.sep + "results" + os.path.sep + "log.txt" 
     with open(pathText, 'w') as f:
         f.write(prov)
 
     print("txt generado")
+
 
 #yoloPath = '/content/yolov5'
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
@@ -186,17 +187,14 @@ yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 model, reader = loadModel(yoloPath)
 
 # #IMAGENES        
-#path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
+#path = os.getcwd()+os.path.sep+"coches"+os.path.sep+"Españoles"+os.path.sep+"*" 
 
 #VIDEO
-#path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
-path = "KaggleCoches"+os.path.sep+"coches"+os.path.sep+"parkingUD.MOV"
-video2Frames(path)
-#path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
-path = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"frames"+os.path.sep+"*"
+# path = os.getcwd() + os.path.sep + "coches" + os.path.sep + "parkingUD.MOV"
+# video2Frames(path)
+# path = os.getcwd() + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep + "*"
 
-folderReading(path, model)
-#path = os.path.sep + "content" + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
-path = "TK-VisionArtificial" + os.path.sep + "KaggleCoches"+os.path.sep+"results"+os.path.sep+"crops"+os.path.sep+"*" 
+# folderReading(path, model)
+path = os.getcwd() + os.path.sep + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + "*" 
 lecturaNombres, lectureResultados = textReading(path,reader)
 regExp(lecturaNombres, lectureResultados)
