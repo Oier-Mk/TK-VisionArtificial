@@ -19,26 +19,25 @@ import traceback
 
 
 
-def loadModel(yoloPath):
-
-    print("Cargando modelos")
+def loadYolo(yoloPath):
+    print("Cargando yolo")
     weightsPath = os.getcwd() + os.path.sep + "weights" + os.path.sep + "best.pt" 
 
     # Model load 
     model = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
-    reader = prepareReadEasy()
 
+    print("Yolo cargado")
+
+    return model
+
+def createFolders():
     dst_path =  os.getcwd() + os.path.sep + "results" + os.path.sep
-
     #crear carpeta
     if not os.path.isdir(dst_path):
         os.mkdir(dst_path)
         os.mkdir(dst_path+os.path.sep+"frames")
         os.mkdir(dst_path+os.path.sep+"crops")
 
-    print("Modelos cargados")
-
-    return model, reader
 
 def video2Frames(path):
     print("Lectura del video comenzada")
@@ -145,7 +144,8 @@ def textReading(path,reader):
             #lectura de matricula
             lecturaNombre.append(image.split(os.path.sep)[-1])
             prov = ""
-            for text in readEasy(reader, image):
+            lecturas = readEasy(reader, image)
+            for text in lecturas:
                 prov+=text[1]
             lecturaResultado.append(prov)
             print("la imagen "+image.split(os.path.sep)[-1]+" SI tiene matrículas legibless")
@@ -178,7 +178,9 @@ def regExp(lecturaNombre,lecturaResultado):
 #yoloPath = '/content/yolov5' #path yolo de collab
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
-model, reader = loadModel(yoloPath)
+model = loadYolo(yoloPath)
+reader = prepareReadEasy() 
+createFolders()
 
 # #IMAGENES        
 #path = os.getcwd() + os.path.sep + "coches" + os.path.sep + "Españoles" + os.path.sep + "*" 
