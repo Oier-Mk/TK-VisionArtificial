@@ -16,22 +16,23 @@ from datetime import datetime
 import re
 import traceback
 
-
+relative = os.getcwd() #local
+#relative = os.getcwd() + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" #collab
 
 
 def loadYolo(yoloPath):
     print("Cargando yolo")
-    weightsPath = os.getcwd() + os.path.sep + "weights" + os.path.sep + "best.pt" 
+    weightsPath = relative + os.path.sep + "weights" + os.path.sep + "best.pt" 
 
     # Model load 
-    model = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
+    modeloYolo = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
 
     print("Yolo cargado")
 
-    return model
+    return modeloYolo
 
 def createFolders():
-    dst_path =  os.getcwd() + os.path.sep + "results" + os.path.sep
+    dst_path =  relative + os.path.sep + "results" + os.path.sep
     #crear carpeta
     if not os.path.isdir(dst_path):
         os.mkdir(dst_path)
@@ -42,7 +43,7 @@ def createFolders():
 def video2Frames(path):
     print("Lectura del video comenzada")
 
-    pathVideoFrames = os.getcwd() + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep 
+    pathVideoFrames = relative + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep 
     
     cap = cv2.VideoCapture(path)
     # # Read until video is completed
@@ -82,7 +83,7 @@ def folderReading(path, model):
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
             imageOCV = cv2.imread(image)
             cropped_image = imageOCV[y00:y11, x00:x11] 
-            cv2.imwrite(os.getcwd() + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + image.split(os.path.sep)[-1], cropped_image)
+            cv2.imwrite(relative + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + image.split(os.path.sep)[-1], cropped_image)
          
         except Exception:
             print(f"La imagen {image.split(os.path.sep)[-1]} no tiene matriculas reconocobles")
@@ -168,7 +169,7 @@ def regExp(lecturaNombre,lecturaResultado):
     for i, name in enumerate(lecturaNombre): 
         prov += (name +"\t"+lecturaResultado[i] +"\n")
     
-    pathText = os.getcwd() + os.path.sep + "results" + os.path.sep + "log.txt" 
+    pathText = relative + os.path.sep + "results" + os.path.sep + "log.txt" 
     with open(pathText, 'w') as f:
         f.write(prov)
 
@@ -178,20 +179,20 @@ def regExp(lecturaNombre,lecturaResultado):
 #yoloPath = '/content/yolov5' #path yolo de collab
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
-model = loadYolo(yoloPath)
+modeloYolo = loadYolo(yoloPath)
 reader = prepareReadEasy() 
 createFolders()
 
 # #IMAGENES        
-#path = os.getcwd() + os.path.sep + "coches" + os.path.sep + "Españoles" + os.path.sep + "*" 
+#path = relative + os.path.sep + "coches" + os.path.sep + "Españoles" + os.path.sep + "*" 
 
 #VIDEO
-# path = os.getcwd() + os.path.sep + "coches" + os.path.sep + "parkingUD.MOV"
+# path = relative + os.path.sep + "coches" + os.path.sep + "parkingUD.MOV"
 # video2Frames(path)
 
-# path = os.getcwd() + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep + "*"
-# folderReading(path, model)
+# path = relative + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep + "*"
+# folderReading(path, modeloYolo)
 
-path = os.getcwd() + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + "*" 
+path = relative + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + "*" 
 lecturaNombres, lectureResultados = textReading(path,reader)
 regExp(lecturaNombres, lectureResultados)
