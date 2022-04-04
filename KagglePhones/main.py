@@ -11,9 +11,6 @@ import glob
 import traceback
 import os.path as Path
 
-relative = os.getcwd() #local
-#relative = os.getcwd() + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" #collab
-
 
 def loadYolo(yoloPath):
     print("Cargando yolo")
@@ -26,7 +23,12 @@ def loadYolo(yoloPath):
 
     return modeloYolo
 
-def openCamera():
+def detectPhone(frame,model):
+    result = model(frame)
+    x0,y0,x1,y1,_,_ = result.xyxy[0][0].numpy().astype(int)
+    return x0,y0,x1,y1
+
+def openCamera(model):
     print("Camera opened")
     cap = cv2.VideoCapture(0)
 
@@ -36,8 +38,12 @@ def openCamera():
 
     while True:
         ret, frame = cap.read()
-        frame = cv2.resize(frame, None, fx=0.75, fy=0.75, interpolation=cv2.INTER_AREA)
-        
+        try:
+            x0,y0,x1,y1 = detectPhone(frame,model)
+            cv2.rectangle(frame,(x0,y0),(x1,y1),(0,255,0),2)
+        except:
+            #print("No phone detected")
+            pass
         cv2.imshow('Phone detector', frame)
         c = cv2.waitKey(1)
         if c == 27:
@@ -48,11 +54,15 @@ def openCamera():
     print("Camera closed")
 
 
+relative = os.getcwd() + os.path.sep + "KagglePhones" #local
+print(relative)
+#relative = os.getcwd() + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" #collab
+
 #yoloPath = '/content/yolov5' #path yolo de collab
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
-modeloYolo = loadYolo(yoloPath)
+model = loadYolo(yoloPath)
 
-openCamera()
+openCamera(model)
 
 
