@@ -54,7 +54,7 @@ def openCamera(model):
     print("Camera closed")
 
 
-relative = os.getcwd() + os.path.sep + "KagglePhones" #local
+relative = os.getcwd() #+ os.path.sep + "KagglePhones" #local
 print(relative)
 #relative = os.getcwd() + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" #collab
 
