@@ -1,3 +1,5 @@
+#pip install lxml
+#pip install beautifulsoup4
 
 from bs4 import BeautifulSoup
 import glob
