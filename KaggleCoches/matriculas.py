@@ -87,7 +87,7 @@ def folderReading(path, model):
          
         except Exception:
             print(f"La imagen {image.split(os.path.sep)[-1]} no tiene matriculas reconocobles")
-            #print(traceback.format_exc())
+            print(traceback.format_exc())
 
     print("Lectura de carpeta completada")
 
@@ -152,7 +152,7 @@ def textReading(path,reader):
             print("la imagen "+image.split(os.path.sep)[-1]+" SI tiene matrículas legibless")
         except Exception:
             print(traceback.format_exc())
-            print("la imagen "+image.split(os.path.sep)[-1]+" no tiene matrículas legibless")
+            print("la imagen "+image.split(os.path.sep)[-1]+" NO tiene matrículas legibless")
     print("Lectura del OCR completada")
 
     return(lecturaNombre,lecturaResultado)
