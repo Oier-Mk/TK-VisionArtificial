@@ -56,7 +56,7 @@ def video2Frames(path):
                 now = datetime.now()
                 path = pathVideoFrames+str(now)+".jpeg"
                 cv2.imwrite(path, frame)
-                print(f"imagen {now} ha sido recortada" )
+                print(f"Se ha extraido un frame de la imagen {now}" )
         else: 
             break
         cont = cont+1
