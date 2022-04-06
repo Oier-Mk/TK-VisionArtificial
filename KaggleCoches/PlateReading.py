@@ -2,6 +2,7 @@ import glob
 import traceback
 from leer_texto import prepareReadEasy, readEasy
 import os
+import re
 
 relative = os.getcwd() #local
 

@@ -84,14 +84,14 @@ def plateCrop(path, model):
          
         except Exception:
             print(f"La imagen {image.split(os.path.sep)[-1]} no tiene matriculas reconocobles")
-            print(traceback.format_exc())
+            #print(traceback.format_exc())
 
     print("Lectura de carpeta completada")
 
 
 #yoloPath = '/content/yolov5' #path yolo de collab
-#yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
-yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
+yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+#yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 modeloYolo = loadYolo(yoloPath)
 
 createFolders()
