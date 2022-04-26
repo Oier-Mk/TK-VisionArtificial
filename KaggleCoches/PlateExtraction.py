@@ -48,11 +48,12 @@ def video2Frames(path):
         ret, frame = cap.read()
         if ret == True:
             if cont % 10 == 0:
-                path = relative + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep + str(cont) +".jpeg"
+                now = datetime.now()
+                path = pathVideoFrames + str(now) +".jpeg"
                 if not cv2.imwrite(path, frame):
                     print(traceback.format_exc())
                 else:
-                    print(f"Se ha extraido un frame de la imagen {cont}" )
+                    print(f"Se ha extraido un frame de la imagen {now}" )
         else: 
             break
         cont = cont+1
@@ -80,16 +81,17 @@ def plateCrop(path, model):
             imageOCV = cv2.imread(image)
             cropped_image = imageOCV[y00:y11, x00:x11] 
             cv2.imwrite(relative + os.path.sep + "results" + os.path.sep + "crops" + os.path.sep + image.split(os.path.sep)[-1], cropped_image)
-            print(f"La imagen {image.split(os.path.sep)[-1]} SI tiene matriculas reconocobles")
+         
         except Exception:
             print(f"La imagen {image.split(os.path.sep)[-1]} no tiene matriculas reconocobles")
+            #print(traceback.format_exc())
 
     print("Lectura de carpeta completada")
 
 
 #yoloPath = '/content/yolov5' #path yolo de collab
-#yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
-yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
+yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+#yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 modeloYolo = loadYolo(yoloPath)
 
 createFolders()
@@ -98,9 +100,10 @@ createFolders()
 #path = relative + os.path.sep + "coches" + os.path.sep + "Españoles" + os.path.sep + "*" 
 
 #VIDEO
-path = relative + os.path.sep + "coches" + os.path.sep + "parkingUD.MOV"
+path = relative + os.path.sep + "coches" + os.path.sep + "video.MOV"
 video2Frames(path)
 
 path = relative + os.path.sep + "results" + os.path.sep + "frames" + os.path.sep + "*"
 plateCrop(path, modeloYolo)
+
 

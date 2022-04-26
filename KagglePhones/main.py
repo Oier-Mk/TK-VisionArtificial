@@ -55,8 +55,7 @@ def openCamera(model):
 
 
 relative = os.getcwd() #+ os.path.sep + "KagglePhones" #local
-print(relative)
-#relative = os.getcwd() + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KaggleCoches" #collab
+#relative = os.getcwd() + os.path.sep + "TK-VisionArtificial" + os.path.sep + "KagglePhones" #collab
 
 #yoloPath = '/content/yolov5' #path yolo de collab
 yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
