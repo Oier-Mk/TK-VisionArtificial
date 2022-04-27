@@ -75,6 +75,7 @@ def plateCrop(path, model):
         try:
             # Inference
             results = model(image)
+            results.print()
             # Results
             x0, y0, x1, y1, _, _ = results.xyxy[0][0].numpy().astype(int)        
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
