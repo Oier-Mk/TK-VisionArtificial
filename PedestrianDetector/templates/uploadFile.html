@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <h1>Hello, world!</h1>
-<form action="/cgi-bin/save.py">
+<body>
+<form action="/upload/" method="post" enctype="multipart/form-data">
     <label for="UploadFile">Add the image you want to upload:</label>
-    <input type="file" id="UploadFile" name="UploadFile" accept="image/*">
+    <input type="file" id="file" name="file" accept="image/*">
     <input type="submit">
   </form>
+</body>
 </html>
+

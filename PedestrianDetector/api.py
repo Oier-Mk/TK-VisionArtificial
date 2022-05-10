@@ -20,8 +20,10 @@ async def uploadFile(request: Request):
     templates = Jinja2Templates(directory="templates")
     return templates.TemplateResponse("uploadFile.html",{"request":request})
 
-@app.get("/returnImage/?file={file}", response_class=HTMLResponse)
-async def returnImage(request: Request, file: str) :
+
+
+@app.post("/upload/", response_class=HTMLResponse)
+async def uploadFile(request: Request, file: UploadFile = File(...)) :
     path = "pictures" +os.path.sep + f'{file.filename}'
     with open( path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -29,16 +31,6 @@ async def returnImage(request: Request, file: str) :
     print("$$$$ "+str(nDetections))
     templates = Jinja2Templates(directory="templates")
     return templates.TemplateResponse("returnImage.html",{"request":request, "nDetections": nDetections, "image":image})
-
-
-@app.post("/upload/")
-async def uploadFile(file: UploadFile = File(...)) :
-    path = "pictures" +os.path.sep + f'{file.filename}'
-    with open( path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    nDetections, image = detectImage(path, modeloYolo)
-    print("$$$$ "+str(nDetections))
-    return nDetections
 
 
 @app.get("/items/")
