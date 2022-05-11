@@ -7,23 +7,35 @@ from starlette.responses import StreamingResponse
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 from image import detectImage
 from main import modeloYolo
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount( os.path.sep + "static", StaticFiles(directory="static"), name="static")
 
 
-@app.get("/")
-async def helloWorld():
-    return {"Hello, world!"}
+@app.get("/", response_class=HTMLResponse)
+async def uploadFile(request: Request):
+    templates = Jinja2Templates(directory="templates")
+    return templates.TemplateResponse("index.html",{"request":request})
 
 @app.get("/uploadFile/", response_class=HTMLResponse)
 async def uploadFile(request: Request):
     templates = Jinja2Templates(directory="templates")
     return templates.TemplateResponse("uploadFile.html",{"request":request})
 
-
+class ReturnObject(BaseModel):
+    #image: str
+    nDetections: int
+    # def __init__(self,nDetections,image):
+    #     self.nDetections = nDetections
+    #     self.image = image
+    def __init__(self,nDetections):
+        self.nDetections = nDetections
+    
 
 @app.post("/upload/", response_class=HTMLResponse)
 async def uploadFile(request: Request, file: UploadFile = File(...)) :
@@ -31,18 +43,10 @@ async def uploadFile(request: Request, file: UploadFile = File(...)) :
     with open( path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     nDetections, img = detectImage(path, modeloYolo)
-    scale_percent = 30 # percent of original size
-    width = int(img.shape[1] * scale_percent / 100)
-    height = int(img.shape[0] * scale_percent / 100)
-    dim = (width, height)
-    resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
     path = os.path.sep + "static" + os.path.sep + "results" + os.path.sep + f'{file.filename}'
-    cv2.imwrite(path,resized)
-    print("$$$$ "+str(nDetections))
-    templates = Jinja2Templates(directory="templates")
-    return templates.TemplateResponse("returnImage.html",{"request":request, "nDetections": nDetections, "image":path})
+    cv2.imwrite(path,img)
+    json_compatible_item_data = jsonable_encoder(ReturnObject(path))
+    return JSONResponse(content=json_compatible_item_data)
+    #templates = Jinja2Templates(directory="templates")
+    #return templates.TemplateResponse("returnImage.html",{"request":request, "nDetections": nDetections, "path":path})
 
-
-@app.get("/items/")
-async def read_item(UploadFile: str = 0):
-    return UploadFile
