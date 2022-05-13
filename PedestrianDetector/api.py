@@ -13,8 +13,9 @@ from pydantic import BaseModel
 from image import detectImage
 from main import modeloYolo
 
+path = "/static"
 app = FastAPI()
-app.mount( os.path.sep + "static", StaticFiles(directory="static"), name="static")
+app.mount(path , StaticFiles(directory="static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -27,14 +28,14 @@ async def uploadFile(request: Request):
     templates = Jinja2Templates(directory="templates")
     return templates.TemplateResponse("uploadFile.html",{"request":request})
 
-class ReturnObject(BaseModel):
+#class ReturnObject(BaseModel):
     #image: str
-    nDetections: int
+    #nDetections: int
     # def __init__(self,nDetections,image):
     #     self.nDetections = nDetections
     #     self.image = image
-    def __init__(self,nDetections):
-        self.nDetections = nDetections
+    #def __init__(self,nDetections):
+        #self.nDetections = nDetections
     
 
 @app.post("/upload/", response_class=HTMLResponse)
@@ -43,10 +44,13 @@ async def uploadFile(request: Request, file: UploadFile = File(...)) :
     with open( path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     nDetections, img = detectImage(path, modeloYolo)
-    path = os.path.sep + "static" + os.path.sep + "results" + os.path.sep + f'{file.filename}'
+    path = os.path.relpath(os.path.sep + "static" + os.path.sep + "results" + os.path.sep + f'{file.filename}', start=os.curdir)
+    #path = "/static/results/SecCamera.png"w
+    print(path)
     cv2.imwrite(path,img)
-    json_compatible_item_data = jsonable_encoder(ReturnObject(path))
-    return JSONResponse(content=json_compatible_item_data)
-    #templates = Jinja2Templates(directory="templates")
-    #return templates.TemplateResponse("returnImage.html",{"request":request, "nDetections": nDetections, "path":path})
+    print(os.path.isdir(os.path.sep + "static" + os.path.sep + "results"+ os.path.sep))
+    #json_compatible_item_data = jsonable_encoder(ReturnObject(path))
+    #return JSONResponse(content=json_compatible_item_data)
+    templates = Jinja2Templates(directory="templates")
+    return templates.TemplateResponse("returnImage.html",{"request":request, "nDetections": nDetections, "path":path})
 
