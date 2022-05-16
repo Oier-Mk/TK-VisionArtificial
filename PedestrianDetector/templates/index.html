@@ -18,30 +18,30 @@
   <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet" type="text/css">
 
   <!-- Bootstrap CSS Style -->
-  <link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/bootstrap.min.css") }}>
 
   <!-- Template CSS Style -->
-  <link rel="stylesheet" href="static/assets/css/style.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/style.css") }}>
 
   <!-- Animate CSS  -->
-  <link rel="stylesheet" href="static/assets/css/animate.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/animate.css") }}>
 
   <!-- FontAwesome 4.3.0 Icons  -->
-  <link rel="stylesheet" href="static/assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/font-awesome.min.css") }}>
 
   <!-- et line font  -->
-  <link rel="stylesheet" href="static/assets/css/et-line-font/style.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/et-line-font/style.css") }}>
 
   <!-- BXslider CSS  -->
-  <link rel="stylesheet" href="static/assets/css/bxslider/jquery.bxslider.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/bxslider/jquery.bxslider.css") }}>
 
   <!-- Owl Carousel CSS Style -->
-  <link rel="stylesheet" href="static/assets/css/owl-carousel/owl.carousel.css">
-  <link rel="stylesheet" href="static/assets/css/owl-carousel/owl.theme.css">
-  <link rel="stylesheet" href="static/assets/css/owl-carousel/owl.transitions.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/owl-carousel/owl.carousel.css") }}>
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/owl-carousel/owl.theme.css") }}>
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/owl-carousel/owl.transitions.css") }}>
 
   <!-- Magnific-Popup CSS Style -->
-  <link rel="stylesheet" href="static/assets/css/magnific-popup/magnific-popup.css">
+  <link rel="stylesheet" href={{ url_for('static', path="/assets/css/magnific-popup/magnific-popup.css") }}>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,13 +70,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-           <a class="navbar-brand" href="#"><img src="static/assets/images/logo.png" alt=""></a>
+           <a class="navbar-brand" href="#"><img src={{ url_for('static', path="/assets/images/logo.png") }} alt=""></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-nav">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a class="section-scroll" href="#wrapper">Home</a></li>
-            <li><a href="/">Upload</a></li>
+            <li class="active"><a class="section-scroll" href="/home">Home</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container -->
@@ -180,28 +179,27 @@
   </div> <!-- end back-to-top -->
 
   <!-- JS libraries and scripts -->
-  <script src="static/assets/js/jquery-1.11.3.min.js"></script>
-  <script src="static/assets/js/bootstrap.min.js"></script>
-  <script src="static/assets/js/bootstrap-hover-dropdown.min.js"></script>
-  <script src="static/assets/js/jquery.appear.min.js"></script>
-  <script src="static/assets/js/jquery.bxslider.min.js"></script>
-  <script src="static/assets/js/jquery.owl.carousel.min.js"></script>
-  <script src="static/assets/js/jquery.countTo.js"></script>
-  <script src="static/assets/js/jquery.easing.1.3.js"></script>
-  <script src="static/assets/js/jquery.imagesloaded.min.js"></script>
-  <script src="static/assets/js/jquery.isotope.js"></script>
-  <script src="static/assets/js/jquery.placeholder.js"></script>
-  <script src="static/assets/js/jquery.smoothscroll.js"></script>
-  <script src="static/assets/js/jquery.stellar.min.js"></script>
-  <script src="static/assets/js/jquery.waypoints.js"></script>
-  <script src="static/assets/js/jquery.fitvids.js"></script>
-  <script src="static/assets/js/jquery.magnific-popup.min.js"></script>
-  <script src="static/assets/js/jquery.ajaxchimp.min.js"></script>
-  <script src="static/assets/js/jquery.countdown.js"></script>
-  <script src="static/assets/js/jquery.navbar-scroll.js"></script>
-  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-  <script src="static/assets/js/jquery.gmaps.js"></script>
-  <script src="static/assets/js/main.js"></script>
+  <script src={{ url_for('static', path="/assets/js/jquery-1.11.3.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/bootstrap.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/bootstrap-hover-dropdown.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.appear.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.bxslider.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.owl.carousel.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.countTo.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.easing.1.3.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.imagesloaded.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.isotope.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.placeholder.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.smoothscroll.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.stellar.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.waypoints.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.fitvids.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.magnific-popup.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.ajaxchimp.min.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.countdown.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.navbar-scroll.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/jquery.gmaps.js") }}></script>
+  <script src={{ url_for('static', path="/assets/js/main.js") }}></script>
 
 </body>
 </html>

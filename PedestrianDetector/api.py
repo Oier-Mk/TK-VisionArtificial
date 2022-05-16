@@ -9,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+from pathlib import Path
 from pydantic import BaseModel
 from image import detectImage
 from main import modeloYolo
@@ -16,10 +17,16 @@ from main import modeloYolo
 relative = os.getcwd()
 
 app = FastAPI()
-app.mount("/static" , StaticFiles(directory="static"), name="static")
 
+app.mount(
+    "/static",
+    StaticFiles(directory=Path(__file__).parent.absolute() / "static"),
+    name="static",
+)
 
-@app.get("/", response_class=HTMLResponse)
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/home/", response_class=HTMLResponse)
 async def uploadFile(request: Request):
     templates = Jinja2Templates(directory="templates")
     return templates.TemplateResponse("uploadImageHTML.html",{"request":request})
@@ -38,9 +45,9 @@ async def uploadFile(request: Request, file: UploadFile = File(...)):
     nDetections, img = detectImage(path, modeloYolo)
     path =  relative + os.path.sep + "static" + os.path.sep + "results" + os.path.sep + f'{file.filename}'
     cv2.imwrite(path,img)
-    path = "/static/results/"+ f'{file.filename}'    
+    path = "/results/"+ f'{file.filename}'    
     templates = Jinja2Templates(directory="templates")
-    return templates.TemplateResponse("returnImageHTML.html",{"request":request, "nDetections": nDetections, "path":path})
+    return templates.TemplateResponse("returnImageHTML.html",{"request":request, "nDetections": nDetections, "path": path})
 
 @app.post("/upload/", response_class=HTMLResponse)
 async def uploadFile(request: Request, file: UploadFile = File(...)) :
