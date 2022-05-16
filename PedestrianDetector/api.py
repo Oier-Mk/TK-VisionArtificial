@@ -13,9 +13,10 @@ from pydantic import BaseModel
 from image import detectImage
 from main import modeloYolo
 
-path = "/static"
+relative = os.getcwd()
+
 app = FastAPI()
-app.mount(path , StaticFiles(directory="static"), name="static")
+app.mount("/static" , StaticFiles(directory="static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -44,11 +45,12 @@ async def uploadFile(request: Request, file: UploadFile = File(...)) :
     with open( path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     nDetections, img = detectImage(path, modeloYolo)
-    path = os.path.relpath(os.path.sep + "static" + os.path.sep + "results" + os.path.sep + f'{file.filename}', start=os.curdir)
+    path =  relative + os.path.sep + "static" + os.path.sep + "results" + os.path.sep + f'{file.filename}'
     #path = "/static/results/SecCamera.png"w
     print(path)
     cv2.imwrite(path,img)
-    print(os.path.isdir(os.path.sep + "static" + os.path.sep + "results"+ os.path.sep))
+    path = "static/results/"+ f'{file.filename}'
+    print(path)
     #json_compatible_item_data = jsonable_encoder(ReturnObject(path))
     #return JSONResponse(content=json_compatible_item_data)
     templates = Jinja2Templates(directory="templates")
