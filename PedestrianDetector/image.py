@@ -6,6 +6,10 @@ import shutil
 
 def detectImage(path, model):
     #https://docs.ultralytics.com/tutorials/pytorch-hub/
+    """
+    The Yolo model passed by parameter detects pedestrians from the path given, 
+    returns the image and the number of objects detected.
+    """
     print("Conteo comenzado")
 
     try:

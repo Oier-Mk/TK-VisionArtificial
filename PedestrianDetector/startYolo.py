@@ -3,7 +3,11 @@ import os
 
 relative = os.getcwd() #collab
 
+
 def loadYolo(yoloPath):
+    """
+    Loads a yolo model with a custom trained model 
+    """
     print("Cargando yolo")
     weightsPath = relative + os.path.sep + "weights" + os.path.sep + "best.pt" 
     # Model load 
