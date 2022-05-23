@@ -6,7 +6,7 @@ import os
 if __name__ == '__main__' :
 
     # Read image
-    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - Vision Artificial/FaceBlur/images/People.jpeg"
+    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/images/People.jpeg"
     img = cv2.imread(path)
 
     # Select ROI
