@@ -61,7 +61,6 @@ for path in files:
         
         print(string)
         path = path.split(".")[0]+'.txt'
-        #print("$$ "+string+" ## "+path)
 
         with open(path, 'w') as f:
             f.write(string)
