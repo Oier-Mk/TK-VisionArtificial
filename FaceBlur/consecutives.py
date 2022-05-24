@@ -1,13 +1,16 @@
-a = 10001
-b = 18207
+#ESTE SCRIPT REALIZA UN BARRIDO POR TODO ESE TXT CON LOS N'UMEROS DE LOS QUE SE HA REALIZADO LA CONVERSI'ON DE LAS ANOTACIONES
+#CON ESTE SCRIPT SE VER'A CUALES SON LAS FOTOS SIN ANOTACI'ON.
 
+a = 10001
+b = 12015
 
 rango = list(range(a, b + 1))
 lista = list()
 
-path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/dataSet/numbers.txt"
+path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/data/train/"
+numbers = path + "numbers.txt"
 
-with open(path) as f:
+with open(numbers) as f:
     for i in f.readlines():
         lista.append(int(i))
 f.close()
@@ -22,5 +25,5 @@ string = ''
 for i in rango:
     string += str(i) + "\n"
 
-with open("/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/dataSet/noAnnotations.txt", 'w') as f:
+with open(path+"noAnnotations.txt", 'w') as f:
     f.write(string)

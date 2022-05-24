@@ -1,6 +1,9 @@
 import os
 
-def convert(width, height, xmin, xmax, ymin, ymax):
+#https://www.kaggle.com/datasets/mksaad/wider-face-a-face-detection-benchmark
+#CON ESTE SCRIPT CREAMOS TODOS LOS TXT CON LAS ANOTACIONES EN FORMATO CSV
+
+def convert(width, height, xmin, ymin, xmax, ymax):
     width = int(width)
     height = int(height)
     xmin = int(xmin)
@@ -31,19 +34,21 @@ import time
 
 start = time.time()
 
-path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/dataSet/annotations.csv"
-dst = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/dataSet/images"
+path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/data/train/"
+annotations = path+"annotationsTrain.csv"
+dst = path
 
 numbers = ""
 
-with open(path) as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=',')
+with open(annotations) as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=';')
     i = 0
     picture =  ""
     string = ""
     for row in csv_reader:
         if i == 0:
             i += 1
+            print(row)
         else:
             if picture != row[0]:
                 write2txt(picture,dst,string)
@@ -63,5 +68,5 @@ end = time.time()
 
 print("Runtime = " + str((end-start)*60) + "ms")
 
-with open("/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/dataSet/numbers.txt", 'w') as f:
+with open(path + "numbers.txt", 'w') as f:
     f.write(numbers)
