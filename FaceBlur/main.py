@@ -4,9 +4,14 @@ import numpy as np
 import math
 import os
 import torch
-import traceback
+import argparse
 
 relative = os.getcwd()
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-p', '--imgPath', required=True, type=str, help= 'specify the path of the img you want to blur')
+parser.add_argument('-y', '--yoloPath', required= True, type=str, help='specify path of Yolov5 in your device')
+args = parser.parse_args()
 
 def loadYolo(yoloPath):
     weightsPath = relative + os.path.sep + "weights" + os.path.sep + "best.pt" 
@@ -28,14 +33,18 @@ def getNDetections(results):
 
 if __name__ == '__main__' :
 
-    yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+    yoloPath = args.yoloPath
+    #yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
     #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
+    
+
 
     modelo = loadYolo(yoloPath)
 
     #path = r"C:\Users\eneko\GitHub\TK-VisionArtificial\FaceBlur\images\People.jpeg"
-    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/images/People.jpeg"
-    
+    #path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/images/People.jpeg"
+    path = args.imgPath
+
     img, r = selectRange(path)
 
     xRange1 = int(r[0])
