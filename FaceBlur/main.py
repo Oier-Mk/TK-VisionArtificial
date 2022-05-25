@@ -9,26 +9,18 @@ import traceback
 relative = os.getcwd()
 
 def loadYolo(yoloPath):
-    print("Cargando yolo")
     weightsPath = relative + os.path.sep + "weights" + os.path.sep + "best.pt" 
-
-    # Model load 
     modeloYolo = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
-
-    print("Yolo cargado")
-
     return modeloYolo
 
 def selectRange(path):
-    # Read image
     img = cv2.imread(path)
+    roi = cv2.selectROI(img)
+    return img, roi
 
-    # Select ROI
-    return img, cv2.selectROI(img)
-
-def blur(mask, w, h, x1, y1, x2, y2):
-    centro = (int(x1+(x2/2)),int(y1+(y2/2)))
-    radio = int((math.sqrt(w * w + h * h) // 2)/2)
+def blur(mask, w, h, x0, y0, x1, y1):
+    centro = (int(x0+((x1-x0)/2)),int(y0+((y1-y0)/2)))
+    radio = int((math.sqrt(w * w + h * h) // 2)/1.5)
     cv2.circle(mask, centro, radio, (255, 255, 255), -1)
 
 def getNDetections(results):
@@ -48,44 +40,39 @@ if __name__ == '__main__' :
 
     xRange1 = int(r[0])
     yRange1 = int(r[1])  
-    xRange2 = int(r[2])
-    yRange2 = int(r[3])
-
-
-    pRange1 = (xRange1,yRange1)
-    pRange2 = (xRange2,yRange2)
-
-    img = cv2.imread(path)
+    wRange = int(r[2])
+    hRange = int(r[3])
+    xRange2 = xRange1 + wRange
+    yRange2 = yRange1 + hRange
 
     results = modelo(img)
+    mask = np.zeros(img.shape, dtype='uint8')
     
     i = 0
+    
     while True:
         try:
-            print(i)
             x0, y0, x1, y1, _, _ = results.xyxy[0][i].numpy().astype(int)
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
-            print(xRange1, yRange1, xRange2, yRange2)
-            print(x00,y00,x11,y11)
-            #TODO checkear esta condicion, no se porque no se cumple
-            izquierdaX = x00>xRange1
+
+            izquierdaX = xRange1<x00
             derechaX = x11<xRange2
-            arribaY = y00>yRange1
+
+            arribaY = yRange1<y00
             abajoY = y11<yRange2
-            print(izquierdaX, derechaX, arribaY, abajoY)
+
             if(izquierdaX & derechaX & arribaY & abajoY):
-                cv2.rectangle(img, (x00, y00), (x11, y11), (0, 0, 255),-1, 8)
-            cv2.rectangle(img, (x00, y00), (x11, y11), (255, 0, 0),-1, 8)
+                blur(mask, x11-x00, y11-y00, x00, y00, x11, y11)
+                print("One face blured")
+
             i+=1
-            #print("One face blured")
         except Exception:
-            #print(traceback.format_exc())
             print("No more faces detected")
             break
     # Results
-
+    p = np.where(mask > 0, cv2.medianBlur(img, 99), img)
     # Display cropped image
-    cv2.imshow(path.split(os.path.sep)[-1], img)
+    cv2.imshow(path.split(os.path.sep)[-1], p)
     cv2.waitKey(0)
 
     
