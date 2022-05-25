@@ -36,12 +36,13 @@ def getNDetections(results):
 
 if __name__ == '__main__' :
 
-    #yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
-    yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
+    yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+    #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 
     modelo = loadYolo(yoloPath)
 
-    path = r"C:\Users\eneko\GitHub\TK-VisionArtificial\FaceBlur\images\People.jpeg"
+    #path = r"C:\Users\eneko\GitHub\TK-VisionArtificial\FaceBlur\images\People.jpeg"
+    path = "/Users/mentxaka/Documents/Y - Trabajo/TK - VisionArtificial/FaceBlur/images/People.jpeg"
     
     img, r = selectRange(path)
 
@@ -49,6 +50,7 @@ if __name__ == '__main__' :
     yRange1 = int(r[1])  
     xRange2 = int(r[2])
     yRange2 = int(r[3])
+
 
     pRange1 = (xRange1,yRange1)
     pRange2 = (xRange2,yRange2)
@@ -63,19 +65,24 @@ if __name__ == '__main__' :
             print(i)
             x0, y0, x1, y1, _, _ = results.xyxy[0][i].numpy().astype(int)
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
+            print(xRange1, yRange1, xRange2, yRange2)
+            print(x00,y00,x11,y11)
             #TODO checkear esta condicion, no se porque no se cumple
-            if(xRange1<x00 & xRange2>x11 & yRange1 < y00 & yRange2>y11):
-                cv2.rectangle(img, (x00, y00), (x11, y11), (0, 0, 0),-1, 8)
+            izquierdaX = x00>xRange1
+            derechaX = x11<xRange2
+            arribaY = y00>yRange1
+            abajoY = y11<yRange2
+            print(izquierdaX, derechaX, arribaY, abajoY)
+            if(izquierdaX & derechaX & arribaY & abajoY):
+                cv2.rectangle(img, (x00, y00), (x11, y11), (0, 0, 255),-1, 8)
+            cv2.rectangle(img, (x00, y00), (x11, y11), (255, 0, 0),-1, 8)
             i+=1
-            print("One face blured")
+            #print("One face blured")
         except Exception:
-            print(traceback.format_exc())
+            #print(traceback.format_exc())
             print("No more faces detected")
             break
     # Results
-
-    
-
 
     # Display cropped image
     cv2.imshow(path.split(os.path.sep)[-1], img)
