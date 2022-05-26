@@ -1,4 +1,3 @@
-from re import I
 import cv2
 import numpy as np
 import math
@@ -58,7 +57,6 @@ if __name__ == '__main__' :
     mask = np.zeros(img.shape, dtype='uint8')
     
     i = 0
-    
     while True:
         try:
             x0, y0, x1, y1, _, _ = results.xyxy[0][i].numpy().astype(int)
