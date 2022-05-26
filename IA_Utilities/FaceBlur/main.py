@@ -8,13 +8,8 @@ import argparse
 relative = os.getcwd()
 yoloPath = os.getcwd() + "/yolov5"
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-p', '--imgPath', required=True, type=str, help= 'specify the path of the img you want to blur')
-parser.add_argument('-y', '--yoloPath', required= True, type=str, help='specify path of Yolov5 in your device')
-args = parser.parse_args()
-
 def loadYolo(yoloPath):
-    weightsPath = relative + os.path.sep + "weights" + os.path.sep + "best.pt" 
+    weightsPath = relative + os.path.sep + "FaceBlur" + os.path.sep + "weights" + os.path.sep + "best.pt" 
     modeloYolo = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
     return modeloYolo
 
