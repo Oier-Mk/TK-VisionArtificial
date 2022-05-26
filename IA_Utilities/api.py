@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Request
+from fastapi import FastAPI, File, UploadFile, Request, Form
 import shutil
 import os
 import io
@@ -72,7 +72,7 @@ async def uploadFile(request: Request, file: UploadFile = File(...)):
 
 
 @app.post("/FaceBlur/response/", response_class=HTMLResponse)
-async def uploadFile(request: Request, x: int, y: int, x2: int, y2: int, imgName: str): #TODO paso de parametros incorrecto
+async def uploadFile(request: Request, x: int = Form(...), y: int = Form(...), x2: int = Form(...), y2: int = Form(...), imgName: str = Form(...)): #TODO paso de parametros incorrecto
     path =  relative + os.path.sep + "static" + os.path.sep + "FaceBlur" + os.path.sep + "pictures" + os.path.sep + f'{imgName}'
     nDetections, img = faceBlur(path, faceModel,[x,y,x2,y2])
     path =  relative + os.path.sep + "static" + os.path.sep + "FaceBlur" + os.path.sep + "results" + os.path.sep + f'{imgName}'

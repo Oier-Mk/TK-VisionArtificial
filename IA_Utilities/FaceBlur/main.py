@@ -64,4 +64,6 @@ def faceBlur(path, model, r):
             break
     # Results
     p = np.where(mask > 0, cv2.medianBlur(img, 99), img)
+    # cv2.imshow("foto",p)
+    # cv2.waitKey(0)
     return i+1,p
