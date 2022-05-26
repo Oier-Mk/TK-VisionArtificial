@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+
+{% block section %}
+
+<section>
+    <div id="upload-section" class="pad-sec">
+      <div class="container">
+        <div class="title-section text-center animated out" data-animation="fadeInUp" data-delay="0">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <h2>Your result!</h2>
+              <hr>
+              <p>The image you uploaded has <strong>{{nDetections}}</strong> pedestrians.</p>
+            </div> <!-- edn col-sm-8 -->
+          </div> <!-- End row -->
+        </div> <!-- end title-section -->
+        <div class="row">
+            
+        <div class="col-md-3 without-padding">
+            <div class="right-features-services">
+                
+            </div>
+        </div> <!-- end col-md-3 -->
+
+          <div class="col-md-6">
+            <div class="features-image animated out" data-animation="fadeInUp" data-delay="0">
+              <br>
+              <img id= myImgId src={{ url_for('static', path=path) }} alt="">
+              
+              <form action="/FaceBlur/response/" method="post" class="animated out" data-animation="fadeInUp" data-delay="0" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="UploadFile">Click the button to upload the range you just selected</label>
+                    <input class="form-control br-b" type="integer" id="x" name="x">
+                    <input class="form-control br-b" type="integer" id="y" name="y">
+                    <input class="form-control br-b" type="integer" id="x2" name="x2">
+                    <input class="form-control br-b" type="integer" id="y2" name="y2">
+                    <br>
+                    <input class="form-control br-b" type="string" id="imgName" name="imgName" value="{{name}}" readonly>
+                    <input type="submit" name="submit" value="Send range" id="submit" class="btn btn-sm btn-dark">
+                </div>                    
+              </form>
+            </div> <!-- end features-image -->
+
+          </div> <!-- end col-md-6 -->
+
+          <div class="col-md-3 without-padding">
+            <div class="right-features-services">
+              
+            </div>
+          </div> <!-- end col-md-3 -->
+
+        </div> <!-- end row -->
+      </div> <!-- end container -->
+    </div>
+  </section>
+
+  <script type="text/javascript">
+    //<!--
+    var myImg = document.getElementById("myImgId");
+    myImg.onmousedown = GetCoordinates;
+    
+    function FindPosition(oElement)
+    {
+      if(typeof( oElement.offsetParent ) != "undefined")
+      {
+        for(var posX = 0, posY = 0; oElement; oElement = oElement.offsetParent)
+        {
+          posX += oElement.offsetLeft;
+          posY += oElement.offsetTop;
+        }
+          return [ posX, posY ];
+        }
+        else
+        {
+          return [ oElement.x, oElement.y ];
+        }
+    }
+    let numOfClicks = 0;
+    function GetCoordinates(e)
+    {
+      var PosX = 0;
+      var PosY = 0;
+      var ImgPos;
+      ImgPos = FindPosition(myImg);
+      if (!e) var e = window.event;
+      if (e.pageX || e.pageY)
+      {
+        PosX = e.pageX;
+        PosY = e.pageY;
+      }
+      else if (e.clientX || e.clientY)
+        {
+          PosX = e.clientX + document.body.scrollLeft
+            + document.documentElement.scrollLeft;
+          PosY = e.clientY + document.body.scrollTop
+            + document.documentElement.scrollTop;
+        }
+      PosX = PosX - ImgPos[0];
+      PosY = PosY - ImgPos[1];
+      if(numOfClicks == 0)
+      {
+        document.getElementById("x").value = PosX;
+        document.getElementById("y").value = PosY;
+      }else if(numOfClicks == 1){
+        document.getElementById("x2").value = PosX;
+        document.getElementById("y2").value = PosY;
+      }
+      numOfClicks+=1;
+    } 
+    </script>
+  <!-- End upload-section -->
+  
+
+{% endblock %}

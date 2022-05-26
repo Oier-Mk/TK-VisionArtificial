@@ -60,17 +60,27 @@ async def uploadFile(request: Request):
     templates = Jinja2Templates(directory="templates")
     return templates.TemplateResponse("FaceBlur/uploadImage.html",{"request":request})
 
-@app.post("/FaceBlur/response/", response_class=HTMLResponse)
-async def uploadFile(request: Request, file: UploadFile = File(...)): #TODO faltan los enteros
+@app.post("/FaceBlur/select/", response_class=HTMLResponse)
+async def uploadFile(request: Request, file: UploadFile = File(...)):
+    templates = Jinja2Templates(directory="templates")
     path = "static" + os.path.sep + "FaceBlur" + os.path.sep + "pictures" + os.path.sep + f'{file.filename}'
     with open( path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-    nDetections, img = faceBlur(path, faceModel,[1,2,3,4])
-    path =  relative + os.path.sep + "static" + os.path.sep + "FaceBlur" + os.path.sep + "results" + os.path.sep + f'{file.filename}'
+    path = "FaceBlur" + os.path.sep + "pictures" + os.path.sep + f'{file.filename}'
+    name =  f'{file.filename}'
+    return templates.TemplateResponse("FaceBlur/selectRange.html",{"request":request, "path":path, "name":name})
+
+
+@app.post("/FaceBlur/response/", response_class=HTMLResponse)
+async def uploadFile(request: Request, x: int, y: int, x2: int, y2: int, imgName: str): #TODO paso de parametros incorrecto
+    path =  relative + os.path.sep + "static" + os.path.sep + "FaceBlur" + os.path.sep + "pictures" + os.path.sep + f'{imgName}'
+    nDetections, img = faceBlur(path, faceModel,[x,y,x2,y2])
+    path =  relative + os.path.sep + "static" + os.path.sep + "FaceBlur" + os.path.sep + "results" + os.path.sep + f'{imgName}'
     cv2.imwrite(path,img)
-    path = "FaceBlur/results/"+ f'{file.filename}'    
+    path = "FaceBlur/results/"+ f'{imgName}'    
     templates = Jinja2Templates(directory="templates")
     return templates.TemplateResponse("FaceBlur/returnImage.html",{"request":request, "nDetections": nDetections, "path": path})
+
 
 
 
