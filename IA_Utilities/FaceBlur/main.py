@@ -3,7 +3,7 @@ import numpy as np
 import math
 import os
 import torch
-import argparse
+import traceback
 
 relative = os.getcwd()
 yoloPath = os.getcwd() + "/yolov5"
@@ -32,34 +32,35 @@ def faceBlur(path, model, r):
 
     img = cv2.imread(path)
 
-    xRange1 = int(r[0])
-    yRange1 = int(r[1])  
-    wRange = int(r[2])
-    hRange = int(r[3])
-    xRange2 = xRange1 + wRange
-    yRange2 = yRange1 + hRange
-
+    print(r)
+    for h in range(len(r)):
+        cv2.circle(img, (r[h][0],r[h][1]), radius=5, color=(0, 0, 255), thickness=-1)
     results = model(img)
     mask = np.zeros(img.shape, dtype='uint8')
     
     i = 0
-    while True:
+    p = (0,0)
+    while True:       
         try:
             x0, y0, x1, y1, _, _ = results.xyxy[0][i].numpy().astype(int)
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
-
-            izquierdaX = xRange1<x00
-            derechaX = x11<xRange2
-
-            arribaY = yRange1<y00
-            abajoY = y11<yRange2
-
-            if(izquierdaX & derechaX & arribaY & abajoY):
-                blur(mask, x11-x00, y11-y00, x00, y00, x11, y11)
-                print("One face blured")
-
+            cv2.rectangle(img, (x00,y00),(x11,y11),color=(0, 0, 255), thickness=2)
+            for a in range(len(r)):
+                print("**PUNTO DE ARRAY**")
+                p = r[a]
+                print(p)
+                print(x00, y00, x11, y11)
+                ejeX = x00<p[0] & p[0]<x11
+                ejeY = y00<p[1] & p[1]<y11
+                print(ejeX,ejeY)
+                if(ejeX & ejeY):
+                    blur(mask, x11-x00, y11-y00, x00, y00, x11, y11)
+                    print("One face blured")
+                    break
+            print("--CARA DE YOLO--")
             i+=1
         except Exception:
+            print(traceback.format_exc())
             print("No more faces detected")
             break
     # Results
