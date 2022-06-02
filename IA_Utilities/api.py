@@ -69,9 +69,18 @@ async def uploadFile(request: Request, file: UploadFile = File(...)):
     return templates.TemplateResponse("FaceBlur/selectRange.html",{"request":request, "path":path, "name":name})
 
 @app.post("/FaceBlur/response/", response_class=HTMLResponse)
-async def uploadFile(request: Request, x: int = Form(...), y: int = Form(...), x2: int = Form(...), y2: int = Form(...), imgName: str = Form(...)): #TODO paso de parametros incorrecto
+async def uploadFile(request: Request, x: int = Form(...), y: int = Form(...), x2: int = Form(...), y2: int = Form(...), x3: int = Form(...), y3: int = Form(...), x4: int = Form(...), y4: int = Form(...),x5: int = Form(...), y5: int = Form(...), width: int = Form(...),height: int = Form(...), imgName: str = Form(...)): 
     path =  relative + os.path.sep + "static" + os.path.sep + "FaceBlur" + os.path.sep + "pictures" + os.path.sep + f'{imgName}'
-    nDetections, img = faceBlur(path, faceModel,[x,y,x2,y2])
+    #nDetections, img = faceBlur(path, faceModel,[(x,y),(x2,y2),(x3,y3),(x4,y4),(x5,y5)])
+    nDetections=0
+    r = [[x,y],[x2,y2],[x3,y3],[x4,y4],[x5,y5]]
+    img=cv2.imread(path)
+    originalHeight = img.shape[0]
+    originalWidth = img.shape[1]
+    for h in r:
+        h[0] = int((originalWidth * h[0])/width)
+        h[1] = int((originalHeight * h[1])/height)
+    nDetections, img = faceBlur(path, faceModel,r)
     path =  relative + os.path.sep + "static" + os.path.sep + "FaceBlur" + os.path.sep + "results" + os.path.sep + f'{imgName}'
     cv2.imwrite(path,img)
     path = "FaceBlur/results/"+ f'{imgName}'    
