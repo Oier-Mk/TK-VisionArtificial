@@ -40,6 +40,8 @@
                     <input class="form-control br-b" type="hidden" id="y4" name="y4" value = 0>
                     <input class="form-control br-b" type="hidden" id="x5" name="x5" value = 0>
                     <input class="form-control br-b" type="hidden" id="y5" name="y5" value = 0>
+                    <input class="form-control br-b" type="hidden" id="width" name="width" value = 0>
+                    <input class="form-control br-b" type="hidden" id="height" name="height" value = 0>
                     <br>
                     <input class="form-control br-b" type="string" id="imgName" name="imgName" value="{{name}}" readonly>
                     <input type="submit" name="submit" value="Send range" id="submit" class="btn btn-sm btn-dark">
@@ -69,15 +71,20 @@
     {
       if(typeof( oElement.offsetParent ) != "undefined")
       {
-        for(var posX = 0, posY = 0; oElement; oElement = oElement.offsetParent)
+        for(var px = 0, py = 0; oElement; oElement = oElement.offsetParent)
         {
-          posX += oElement.offsetLeft;
-          posY += oElement.offsetTop;
+          px += oElement.offsetLeft;
+          py += oElement.offsetTop;
         }
-          return [ posX, posY ];
+
+          console.log("Primero");
+          console.log(px);
+          return [ px, py ];
         }
         else
         {
+          console.log("Segundo");
+          console.log(oElement.x);
           return [ oElement.x, oElement.y ];
         }
     }
@@ -86,7 +93,7 @@
     {
       var PosX = 0;
       var PosY = 0;
-      var ImgPos;
+      var ImgPos = 0;
       ImgPos = FindPosition(myImg);
       if (!e) var e = window.event;
       if (e.pageX || e.pageY)
@@ -103,7 +110,8 @@
         }
       PosX = PosX - ImgPos[0];
       PosY = PosY - ImgPos[1];
-      console.log(PosX, PosY);
+      document.getElementById("width").value = myImg.clientWidth;
+      document.getElementById("height").value = myImg.clientHeight;
       if(numOfClicks == 0)
       {
         document.getElementById("x").value = PosX;
