@@ -32,9 +32,6 @@ def faceBlur(path, model, r):
 
     img = cv2.imread(path)
 
-    print(r)
-    for h in range(len(r)):
-        cv2.circle(img, (r[h][0],r[h][1]), radius=5, color=(0, 0, 255), thickness=-1)
     results = model(img)
     mask = np.zeros(img.shape, dtype='uint8')
     
@@ -44,7 +41,6 @@ def faceBlur(path, model, r):
         try:
             x0, y0, x1, y1, _, _ = results.xyxy[0][i].numpy().astype(int)
             x00,y00,x11,y11 = int(x0),int(y0), int(x1), int(y1)
-            cv2.rectangle(img, (x00,y00),(x11,y11),color=(0, 0, 255), thickness=2)
             for a in range(len(r)):
                 print("**PUNTO DE ARRAY**")
                 p = r[a]
