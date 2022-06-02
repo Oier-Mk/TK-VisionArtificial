@@ -146,21 +146,6 @@ async def uploadFile(request: Request, file: UploadFile = File(...), function: i
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 '''! --------------------------------------------------------------------------------------------------------- '''
 
 @app.get("/uploadFileJSON/", response_class=HTMLResponse)
