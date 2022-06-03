@@ -10,7 +10,6 @@
             <div class="col-sm-8 col-sm-offset-2">
               <h2>Your result!</h2>
               <hr>
-              <p>The image you uploaded has <strong>{{nDetections}}</strong> pedestrians.</p>
             </div> <!-- edn col-sm-8 -->
           </div> <!-- End row -->
         </div> <!-- end title-section -->
@@ -29,7 +28,7 @@
               
               <form action="/FaceBlur/response/" method="post" class="animated out" data-animation="fadeInUp" data-delay="0" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="UploadFile">Click the button to upload the range you just selected</label>
+                    <label for="UploadFile">Click the button to upload the faces you just selected</label>
                     <input class="form-control br-b" type="hidden" id="x" name="x" value = 0>
                     <input class="form-control br-b" type="hidden" id="y" name="y" value = 0>
                     <input class="form-control br-b" type="hidden" id="x2" name="x2" value = 0>
@@ -43,7 +42,7 @@
                     <input class="form-control br-b" type="hidden" id="width" name="width" value = 0>
                     <input class="form-control br-b" type="hidden" id="height" name="height" value = 0>
                     <br>
-                    <input class="form-control br-b" type="string" id="imgName" name="imgName" value="{{name}}" readonly>
+                    <input class="form-control br-b" type="hidden" id="imgName" name="imgName" value="{{name}}" readonly>
                     <input type="submit" name="submit" value="Send range" id="submit" class="btn btn-sm btn-dark">
                 </div>                    
               </form>
