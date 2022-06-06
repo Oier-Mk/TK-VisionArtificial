@@ -167,7 +167,7 @@ async def uploadFile(request: Request, file: UploadFile = File(...)) :
     path = "static" + os.path.sep + "pictures" + os.path.sep + f'{file.filename}'
     with open( path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-    nDetections, img = detectImage(path, modeloYolo)
+    nDetections, img = detectImage(path, faceModel)
     path =  relative + os.path.sep + "static" + os.path.sep + "PedestrianDetector" + os.path.sep + "results" + os.path.sep + f'{file.filename}'
     cv2.imwrite(path,img)
     path = "/static/results/"+ f'{file.filename}'
