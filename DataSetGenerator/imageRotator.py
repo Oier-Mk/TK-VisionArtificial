@@ -1,7 +1,7 @@
+import cv2
 from cv2 import rotate
 import numpy as np
 import os
-import cv2
 from PIL import Image 
 import math
 
@@ -32,6 +32,13 @@ def rotateImage(image, angle):
   return result
 
 def points2yolo(points,size):
+
+    from cv2 import rotate
+    import numpy as np
+    import os
+    import cv2
+    from PIL import Image 
+    import math 
 
     width = size[0]
     height = size[1]
