@@ -9,20 +9,15 @@ def round(n, decimals=0):
     multiplier = 10 ** decimals
     return math.floor(n*multiplier + 0.5) / multiplier
 
-def rotatebox(rect, center, degrees):
-    rads = math.radians(degrees)
+def rotatePoint(center, point, angle):
+    angle = math.radians(angle)
 
-    newpts = []
+    ox, oy = center
+    px, py = point
 
-    for pts in rect:
-        diag_x = center[0] - pts[0]
-        diag_y = center[1] - pts[1]
-
-        newdx = diag_x * math.cos(rads) - diag_y * math.sin(rads)
-        newdy = diag_x * math.sin(rads) + diag_y * math.cos(rads)
-        newpts.append( (center[0] + newdx, center[1] + newdy) )
-
-    return newpts
+    qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
+    qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
+    return int(round(qx)), int(round(qy))
 
 def rotateImage(image, angle):
   image_center = tuple(np.array(image.shape[1::-1]) / 2)
@@ -32,14 +27,6 @@ def rotateImage(image, angle):
   return result
 
 def points2yolo(points,size):
-
-    from cv2 import rotate
-    import numpy as np
-    import os
-    import cv2
-    from PIL import Image 
-    import math 
-
     width = size[0]
     height = size[1]
     xmin = points[0][0]
@@ -56,17 +43,7 @@ def points2yolo(points,size):
     propY = puntoY/height
     propAncho = ancho/width
     propAlto = alto/height
-
-    #print("0 " + str(propX) + " " + str(propY) + " " + str(propAncho) + " " + str(propAlto))
-    #print("0 {:.6f} {:.6f} {:.6f} {:.6f}\n".format(propX, propY, propAncho, propAlto))
-
-    print(width,height)
-    print("0 {:.6f} {:.6f} {:.6f} {:.6f}".format(propX, propY, propAncho, propAlto))
-    print(puntoX)
-    print(puntoY)
-    print(ancho)
-    print(alto)
-    return([(xmin,ymin),(xmax,ymin),(xmax,ymax),(xmin,ymax)])
+    return "0 {:.6f} {:.6f} {:.6f} {:.6f}\n".format(propX, propY, propAncho, propAlto)
 
 def yolo2points(values,size):
 
@@ -94,22 +71,20 @@ def yolo2points(values,size):
     puntos = [(puntoX-ancho/2,puntoY-alto/2),(puntoX+ancho/2,puntoY-alto/2),(puntoX+ancho/2,puntoY+alto/2),(puntoX-ancho/2,puntoY+alto/2)]
     return(puntos)
 
-def annotations2points(path, w, h, angle):
+def annotations2points(path, w, h):
     file = open(path, 'r')
     Lines = file.readlines()
     data = []
     for l in Lines:
-        puntos = yolo2points(l,(w,h))
-        centerX = puntos[0][0] - puntos[2][0]
-        centerY = puntos[0][1] - puntos[2][1]
-        data.append(rotatebox(puntos,(centerX,centerY),angle))
+        points = yolo2points(l,(w,h))
+        data.append(points)
     return data 
 
 def points2annotations(points):
     pass
 
 
-def rotator(pathIMG, pathTXT, angle):
+def rotate(pathIMG, pathTXT, angle):
 
     img = cv2.imread(pathIMG) 
     
@@ -117,11 +92,19 @@ def rotator(pathIMG, pathTXT, angle):
 
     h, w, c = img.shape
 
-    annotations = annotations2points(pathTXT, w, h, angle)
+    annotations = annotations2points(pathTXT, w, h)
+    
+    rotatedAnnotations = []
 
-    for a in annotations:       
-        print(a)
-        img = cv2.rectangle(img, a[0], a[2], (255, 0, 0), 1)
+    for a in annotations:
+        points = []
+        for p in a:
+            points.append(rotatePoint((w/2,h/2),p,angle))
+        rotatedAnnotations.append(points)
+
+        #prueba
+        print(points[0],points[2])
+        img = cv2.rectangle(img, points[0], points[2], (255, 0, 0), 1)
         
     return img
 
@@ -129,8 +112,12 @@ def rotator(pathIMG, pathTXT, angle):
 def main():
     relative = os.getcwd() + os.path.sep + "DataSetGenerator"  + os.path.sep #local
     pathIMG = relative + "media/image (15).jpg"
-    pathTXT = relative + "media/image (15) copy.txt"
-    rotator(pathIMG,pathTXT,0)
+    pathTXT = relative + "media/image (15).txt"
+    cv2.imshow('image',cv2.imread(pathIMG))
+    cv2.waitKey(0) 
+    cv2.imshow('image',rotate(pathIMG,pathTXT,90))
+    cv2.waitKey(0) 
+
 
 
 if __name__ == "__main__":
