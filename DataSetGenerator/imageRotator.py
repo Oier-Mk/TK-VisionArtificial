@@ -33,13 +33,6 @@ def rotateImage(image, angle):
 
 def points2yolo(points,size):
 
-    from cv2 import rotate
-    import numpy as np
-    import os
-    import cv2
-    from PIL import Image 
-    import math 
-
     width = size[0]
     height = size[1]
     xmin = points[0][0]
@@ -57,16 +50,9 @@ def points2yolo(points,size):
     propAncho = ancho/width
     propAlto = alto/height
 
-    #print("0 " + str(propX) + " " + str(propY) + " " + str(propAncho) + " " + str(propAlto))
-    #print("0 {:.6f} {:.6f} {:.6f} {:.6f}\n".format(propX, propY, propAncho, propAlto))
 
-    print(width,height)
-    print("0 {:.6f} {:.6f} {:.6f} {:.6f}".format(propX, propY, propAncho, propAlto))
-    print(puntoX)
-    print(puntoY)
-    print(ancho)
-    print(alto)
-    return([(xmin,ymin),(xmax,ymin),(xmax,ymax),(xmin,ymax)])
+    return ("0 {:.6f} {:.6f} {:.6f} {:.6f}\n".format(propX, propY, propAncho, propAlto))
+
 
 def yolo2points(values,size):
 
