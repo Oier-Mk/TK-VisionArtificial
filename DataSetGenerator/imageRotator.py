@@ -89,8 +89,6 @@ def points2annotations(allPoints, size):
         provAnnotations += points2yolo(p, size)
     return provAnnotations
 
-
-
 def rotate(pathIMG, pathTXT, angle):
 
     img = cv2.imread(pathIMG) 
@@ -108,11 +106,12 @@ def rotate(pathIMG, pathTXT, angle):
         for p in a:
             points.append(rotatePoint((w/2,h/2),p,angle))
         rotatedPoints.append(points)
-
-        img = cv2.rectangle(img, points[0], points[2], (255, 0, 0), 1)
+        a = np.array(points)
+        cv2.drawContours(img, [a], 0, (255,255,255), 2)
+        #img = cv2.rectangle(img, points[0], points[2], (255, 0, 0), 1)
 
     pathTXT = pathTXT.split("/")
-    pathTXT[-1] = "r_" + pathTXT[-1]
+    pathTXT[-1] = "r"+str(angle)+"_" + pathTXT[-1]
     pathTXT = "/".join(pathTXT)
        
     file = open(pathTXT, "w")
@@ -120,20 +119,19 @@ def rotate(pathIMG, pathTXT, angle):
     file.close()
 
     pathIMG = pathIMG.split("/")
-    pathIMG[-1] = "r_" + pathIMG[-1]
+    pathIMG[-1] = "r"+str(angle)+"_" + pathIMG[-1]
     pathIMG = "/".join(pathIMG)
     cv2.imwrite(pathIMG,img)
         
     return img, rotatedPoints
 
-
 def main():
     relative = os.getcwd() + os.path.sep + "DataSetGenerator"  + os.path.sep #local
-    pathIMG = relative + "media/image (15).jpg"
-    pathTXT = relative + "media/image (15).txt"
-    rotate(pathIMG,pathTXT,90)
+    pathIMG = relative + "media/image.jpg"
+    pathTXT = relative + "media/image.txt"
 
-
-
+    for i in range(1,360):
+        rotate(pathIMG,pathTXT,i)
+ 
 if __name__ == "__main__":
     main()
