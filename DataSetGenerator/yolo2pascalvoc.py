@@ -44,6 +44,8 @@ def xml_transform(root, classes):
     annopath = join(root, 'labels', '%s.txt')
     imgpath = join(root, 'images', '%s.jpg')
     
+    #os.makedirs(join(root, 'labels'), exist_ok=True)
+    #os.makedirs(join(root, 'images'), exist_ok=True)
     os.makedirs(join(root, 'outputs'), exist_ok=True)
     outpath = join(root, 'outputs', '%s.xml')
 
@@ -120,4 +122,8 @@ def xml_transform(root, classes):
         f.close()     
        
 
-xml_transform(ROOT, YOLO_CLASSES)
+try:
+    xml_transform(ROOT, YOLO_CLASSES)
+except:
+    pass
+

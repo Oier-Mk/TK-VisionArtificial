@@ -6,6 +6,7 @@ def getCSVpoints(filename):
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         currentImg = ""
+        currentAnn = ""
         for row in csv_reader:
             if line_count == 0:
                 print("Leyendo las columnas...")
@@ -19,15 +20,15 @@ def getCSVpoints(filename):
                 xmax = int(row[5])
                 ymax = int(row[6])
 
-                points2yolo([[xmin,ymin],[xmax,ymin],[xmax,ymax],[xmin,ymax]],[width,height])
-
                 if(currentImg != imgname):
+                    print('annotations/{}.txt'.format(imgname))
                     with open('annotations/{}.txt'.format(imgname), 'w') as f:
-                        f.write(points2yolo([[xmin,ymin],[xmax,ymin],[xmax,ymax],[xmin,ymax]],[width,height]))
+                        f.write(currentAnn)
+                    currentImg = imgname
+                    currentAnn = ""
                 else:
-                    with open('annotations/{}.txt'.format(imgname), 'a') as f:
-                        f.write(points2yolo([[xmin,ymin],[xmax,ymin],[xmax,ymax],[xmin,ymax]],[width,height]))
-                currentImg = imgname
+                    currentAnn += points2yolo([[xmin,ymin],[xmax,ymin],[xmax,ymax],[xmin,ymax]],[width,height])
+
 
 getCSVpoints("bbox_train.csv")
 
