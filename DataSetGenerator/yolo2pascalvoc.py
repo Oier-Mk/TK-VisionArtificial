@@ -17,7 +17,9 @@ from os.path import join
 YOLO_CLASSES = ('face')
 
 ## path root folder
-ROOT = '/Users/mentxaka/Github/TK-VisionArtificial/DataSetGenerator/SSD'
+ROOT = '/Users/mentxaka/Github/TK-VisionArtificial/DataSetGenerator/FaceDataset/'
+MEDIAPATH = "media"
+ANNOTATIONPATH = "YOLOannotations"
 
 ## converts the normalized positions  into integer positions
 def unconvert(class_id, width, height, x, y, w, h):
@@ -31,7 +33,7 @@ def unconvert(class_id, width, height, x, y, w, h):
 
 ## converts coco into xml 
 def xml_transform(root, classes):  
-    class_path  = join(root, 'labels')
+    class_path  = join(root, ANNOTATIONPATH)
     ids = list()
     l=os.listdir(class_path)
     
@@ -41,13 +43,11 @@ def xml_transform(root, classes):
         
     ids=[x.split('.')[0] for x in l]   
 
-    annopath = join(root, 'labels', '%s.txt')
+    annopath = join(root, ANNOTATIONPATH, '%s.txt')
     imgpath = join(root, 'images', '%s.jpg')
     
-    #os.makedirs(join(root, 'labels'), exist_ok=True)
-    #os.makedirs(join(root, 'images'), exist_ok=True)
-    os.makedirs(join(root, 'outputs'), exist_ok=True)
-    outpath = join(root, 'outputs', '%s.xml')
+    os.makedirs(join(root, 'PascalVOCannotations'), exist_ok=True)
+    outpath = join(root, 'PascalVOCannotations', '%s.xml')
 
     for i in range(len(ids)):
         img_id = ids[i] 
@@ -61,7 +61,7 @@ def xml_transform(root, classes):
 
         node_root = Element('annotation')
         node_folder = SubElement(node_root, 'folder')
-        node_folder.text = 'VOC2007'
+        node_folder.text = 'DATASET'
         img_name = img_id + '.jpg'
     
         node_filename = SubElement(node_root, 'filename')
@@ -69,7 +69,7 @@ def xml_transform(root, classes):
         
         node_source= SubElement(node_root, 'source')
         node_database = SubElement(node_source, 'database')
-        node_database.text = 'Coco database'
+        node_database.text = 'FaceDataset'
         
         node_size = SubElement(node_root, 'size')
         node_width = SubElement(node_size, 'width')
@@ -116,8 +116,6 @@ def xml_transform(root, classes):
                 dom = parseString(xml)
 
         f =  open(outpath % img_id, "wb")
-        #f = open(os.path.join(outpath, img_id), "w")
-        #os.remove(target)
         f.write(xml)
         f.close()     
        
