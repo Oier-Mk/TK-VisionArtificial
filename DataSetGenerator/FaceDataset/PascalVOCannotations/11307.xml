@@ -1,0 +1,37 @@
+<annotation>
+  <folder>DATASET</folder>
+  <filename>11307.jpg</filename>
+  <source>
+    <database>FaceDataset</database>
+  </source>
+  <size>
+    <width>612</width>
+    <height>408</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>f</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>382</xmin>
+      <ymin>132</ymin>
+      <xmax>439</xmax>
+      <ymax>189</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>f</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>347</xmin>
+      <ymin>148</ymin>
+      <xmax>393</xmax>
+      <ymax>193</ymax>
+    </bndbox>
+  </object>
+</annotation>

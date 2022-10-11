@@ -1,0 +1,25 @@
+<annotation>
+  <folder>DATASET</folder>
+  <filename>16099.jpg</filename>
+  <source>
+    <database>FaceDataset</database>
+  </source>
+  <size>
+    <width>612</width>
+    <height>408</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>f</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>236</xmin>
+      <ymin>54</ymin>
+      <xmax>317</xmax>
+      <ymax>127</ymax>
+    </bndbox>
+  </object>
+</annotation>

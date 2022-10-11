@@ -34,5 +34,16 @@ def function2():
             os.remove(dataset+os.path.sep+filename)
     print(counter)
 
-function2()
+def function3():
+    counter = 0
+    for filename in os.listdir(dataset): 
+        txtname = filename.split(".")[0] + ".xml"
+        imgname = filename.split(".")[0] + ".jpg"
+        if(not os.path.exists(YOLOannotations+os.path.sep+txtname)):
+            print("Eliminamos "+dataset+os.path.sep+imgname)
+            counter+=1
+            os.remove(dataset+os.path.sep+filename)
+    print(counter)
+
+function3()
 #function1()

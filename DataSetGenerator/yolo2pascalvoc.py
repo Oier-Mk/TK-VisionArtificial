@@ -18,8 +18,9 @@ YOLO_CLASSES = ('face')
 
 ## path root folder
 ROOT = '/Users/mentxaka/Github/TK-VisionArtificial/DataSetGenerator/FaceDataset/'
-MEDIAPATH = "media"
+MEDIAPATH = "dataset"
 ANNOTATIONPATH = "YOLOannotations"
+PASCALPATH = "PascalVOCannotations"
 
 ## converts the normalized positions  into integer positions
 def unconvert(class_id, width, height, x, y, w, h):
@@ -44,10 +45,10 @@ def xml_transform(root, classes):
     ids=[x.split('.')[0] for x in l]   
 
     annopath = join(root, ANNOTATIONPATH, '%s.txt')
-    imgpath = join(root, 'images', '%s.jpg')
+    imgpath = join(root, MEDIAPATH, '%s.jpg')
     
-    os.makedirs(join(root, 'PascalVOCannotations'), exist_ok=True)
-    outpath = join(root, 'PascalVOCannotations', '%s.xml')
+    os.makedirs(join(root, PASCALPATH), exist_ok=True)
+    outpath = join(root, PASCALPATH, '%s.xml')
 
     for i in range(len(ids)):
         img_id = ids[i] 
