@@ -6,7 +6,9 @@ import torch
 import traceback
 
 relative = os.getcwd()
-yoloPath = os.getcwd() + "\\yolov5"
+#yoloPath = os.getcwd() + "\\yolov5"
+yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+
 
 def loadYolo(yoloPath):
     weightsPath = relative + os.path.sep + "FaceBlur" + os.path.sep + "weights" + os.path.sep + "best.pt" 
@@ -32,4 +34,4 @@ def getFacePosition(path, model):
     return positionsArray
 
 
-print(getFacePosition("10002.jpg",faceModel))
+print(getFacePosition("/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/10002.jpg",faceModel))
