@@ -4,6 +4,7 @@ import math
 import os
 import torch
 import argparse
+import traceback
 
 relative = os.getcwd()
 
@@ -14,6 +15,7 @@ args = parser.parse_args()
 
 def loadYolo(yoloPath):
     weightsPath = relative + os.path.sep + "weights" + os.path.sep + "best.pt" 
+    weightsPath = "/Users/mentxaka/Github/TK-VisionArtificial/FaceBlur/weights/best.pt"
     modeloYolo = torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
     return modeloYolo
 
@@ -75,6 +77,7 @@ if __name__ == '__main__' :
             i+=1
         except Exception:
             print("No more faces detected")
+            print(traceback.format_exc())
             break
     # Results
     p = np.where(mask > 0, cv2.medianBlur(img, 99), img)
