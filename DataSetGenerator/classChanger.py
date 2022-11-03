@@ -1,6 +1,6 @@
 import glob
 
-path = "/Users/mentxaka/Github/TK-VisionArtificial/DataSetGenerator/testClassChanger/*.txt"
+path = r"C:\Users\eneko\GitHub\TK-VisionArtificial\KaggleCoches\train\*.txt"
 
 files = glob.glob(path)
 
