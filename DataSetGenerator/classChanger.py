@@ -11,4 +11,4 @@ for file in files:
     for line in data:
         newText += "1" + line[1:]
 
-    with open(file.split(".")[0] + "_mod.txt", 'w') as file: file.write(newText)
+    with open(file.split(".")[0] + ".txt", 'w') as file: file.write(newText)
