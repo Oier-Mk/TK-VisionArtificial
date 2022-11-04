@@ -40,6 +40,6 @@ faceThread.join()
 img = pd.plateBoxing(cv2.imread(inPATH),manager.plates)
 img = fd.faceBoxing(img,manager.faces)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+print("Thread --- %s seconds ---" % (time.time() - start_time))
 
 cv2.imwrite(outPATH,img)

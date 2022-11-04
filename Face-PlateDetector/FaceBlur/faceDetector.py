@@ -43,8 +43,3 @@ def faceBoxing(img,points):
     return img
 
 
-# = loadYolo(yoloPath)
-#points = faceDetection("/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg",model)
-#img = faceBoxing(cv2.imread("/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"),points)
-#cv2.imshow('graycsale image',img)
-#cv2.waitKey(0)

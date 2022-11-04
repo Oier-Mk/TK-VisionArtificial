@@ -23,6 +23,6 @@ img = pd.plateBoxing(cv2.imread(inPATH),points)
 points = fd.faceDetection(inPATH,faceModel)
 img = fd.faceBoxing(img,points)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+print("Secuential --- %s seconds ---" % (time.time() - start_time))
 
 cv2.imwrite(outPATH,img)
