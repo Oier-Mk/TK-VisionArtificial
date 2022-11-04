@@ -18,13 +18,14 @@ plateModel = pd.loadYolo(yoloPath)
 inPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
 outPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/mod_Arona_persona.jpg"
 
-start_time = time.time()
-
 def plateValues(inPATH, plateModel, manager):
     manager.plates = pd.plateDetection(inPATH, plateModel)
 
 def faceValues(inPATH, faceModel, manager):
     manager.faces = fd.faceDetection(inPATH, faceModel)
+
+
+start_time = time.time()
 
 manager = DataManager()
 
