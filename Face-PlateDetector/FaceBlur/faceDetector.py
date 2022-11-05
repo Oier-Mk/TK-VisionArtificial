@@ -11,8 +11,8 @@ yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 
 def loadYolo(yoloPath):
-    weightsPath = relative + os.path.sep + "weights" + os.path.sep + "best.pt" 
-    weightsPath = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/FaceBlur/weights/best.pt"
+    weightsPath = relative + os.path.sep + "weights" + os.path.sep + "faces.pt" 
+    #weightsPath = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/FaceBlur/weights/best.pt"
     return torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
      
 def faceDetection(path, model):
@@ -32,14 +32,7 @@ def faceDetection(path, model):
 
 def faceBoxing(img,points):
     for p in points:
-        x0 = p[0][0]
-        x1 = p[1][0]
-        y0 = p[0][1]
-        y1 = p[1][1]
-        centro = (int(x0+((x1-x0)/2)),int(y0+((y1-y0)/2)))
-        #centro = (int(p[0][0]+((p[1][0]-p[0][0])/2)),int(p[0][1]+((p[1][1]-p[0][1])/2)))
-        radio = int((math.sqrt(pow(p[1][0]-p[0][0],2) + pow(p[1][1]-p[0][1],2)) // 2)/1.5)
-        cv2.circle(img, centro, radio, (255, 255, 255), -1)
+        cv2.rectangle(img, p[0], p[1], (255, 255, 255), -1)
     return img
 
 

@@ -25,7 +25,7 @@ def faceValues(inPATH, faceModel, manager):
     manager.faces = fd.faceDetection(inPATH, faceModel)
 
 
-start_time = time.time()
+start_time = time.time()*1000
 
 manager = DataManager()
 
@@ -40,6 +40,6 @@ faceThread.join()
 img = pd.plateBoxing(cv2.imread(inPATH),manager.plates)
 img = fd.faceBoxing(img,manager.faces)
 
-print("Thread --- %s seconds ---" % (time.time() - start_time))
+print("MultiThread --- %s miliseconds ---" % str((time.time()*1000 - start_time)))
 
 cv2.imwrite(outPATH,img)

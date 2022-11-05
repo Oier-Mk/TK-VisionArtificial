@@ -11,7 +11,7 @@ plateModel = pd.loadYolo(yoloPath)
 inPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
 outPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/mod_Arona_persona.jpg"
 
-start_time = time.time()
+start_time = time.time()*1000
 
 #segundo: matriculas
 
@@ -23,6 +23,6 @@ img = pd.plateBoxing(cv2.imread(inPATH),points)
 points = fd.faceDetection(inPATH,faceModel)
 img = fd.faceBoxing(img,points)
 
-print("Secuential --- %s seconds ---" % (time.time() - start_time))
+print("Secuential --- %s miliseconds ---" % str((time.time()*1000 - start_time)))
 
 cv2.imwrite(outPATH,img)

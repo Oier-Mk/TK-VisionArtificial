@@ -2,43 +2,41 @@ mentxaka@Oiers-MacBook-Pro TK-VisionArtificial % /usr/local/bin/python /Users/me
 YOLOv5 🚀 v6.2-187-g5ef69ef Python-3.10.8 torch-1.12.1 CPU
 
 Fusing layers... 
-Model summary: 213 layers, 7012822 parameters, 0 gradients, 15.8 GFLOPs
+Model summary: 157 layers, 7012822 parameters, 0 gradients, 15.8 GFLOPs
 Adding AutoShape... 
 YOLOv5 🚀 v6.2-187-g5ef69ef Python-3.10.8 torch-1.12.1 CPU
 
 Fusing layers... 
-Model summary: 213 layers, 7012822 parameters, 0 gradients
+Model summary: 157 layers, 7012822 parameters, 0 gradients, 15.8 GFLOPs
 Adding AutoShape... 
+image 1/1: 726x1320 1 plate
+Speed: 25.5ms pre-process, 165.7ms inference, 0.9ms NMS per image at shape (1, 3, 352, 640)
 image 1/1: 726x1320 1 face
-Speed: 18.0ms pre-process, 153.9ms inference, 0.5ms NMS per image at shape (1, 3, 352, 640)
-Secuential --- 0.4215989112854004 seconds ---
-
-
+Speed: 18.8ms pre-process, 153.9ms inference, 0.5ms NMS per image at shape (1, 3, 352, 640)
+Secuential --- 389.135986328125 miliseconds ---
 mentxaka@Oiers-MacBook-Pro TK-VisionArtificial % /usr/local/bin/python /Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/thread.py
 YOLOv5 🚀 v6.2-187-g5ef69ef Python-3.10.8 torch-1.12.1 CPU
 
 Fusing layers... 
-Model summary: 213 layers, 7012822 parameters, 0 gradients, 15.8 GFLOPs
+Model summary: 157 layers, 7012822 parameters, 0 gradients, 15.8 GFLOPs
 Adding AutoShape... 
 YOLOv5 🚀 v6.2-187-g5ef69ef Python-3.10.8 torch-1.12.1 CPU
 
 Fusing layers... 
-Model summary: 213 layers, 7012822 parameters, 0 gradients
+Model summary: 157 layers, 7012822 parameters, 0 gradients, 15.8 GFLOPs
 Adding AutoShape... 
+image 1/1: 726x1320 1 plate
+Speed: 41.4ms pre-process, 215.0ms inference, 1.5ms NMS per image at shape (1, 3, 352, 640)
 image 1/1: 726x1320 1 face
-Speed: 27.3ms pre-process, 201.3ms inference, 1.6ms NMS per image at shape (1, 3, 352, 640)
-Thread --- 0.259537935256958 seconds ---
-
-
+Speed: 47.5ms pre-process, 213.9ms inference, 0.5ms NMS per image at shape (1, 3, 352, 640)
+MultiThreads --- 279.9267578125 miliseconds ---
 mentxaka@Oiers-MacBook-Pro TK-VisionArtificial % /usr/local/bin/python /Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/multiclass.py
 YOLOv5 🚀 v6.2-187-g5ef69ef Python-3.10.8 torch-1.12.1 CPU
 
 Fusing layers... 
 Model summary: 157 layers, 7015519 parameters, 0 gradients, 15.8 GFLOPs
 Adding AutoShape... 
-image 1/1: 726x1320 1 plate
-Speed: 29.1ms pre-process, 187.6ms inference, 0.9ms NMS per image at shape (1, 3, 352, 640)
-Multiclass --- 0.23597383499145508 seconds ---
+image 1/1: 726x1320 1 face, 1 plate
+Speed: 29.9ms pre-process, 175.0ms inference, 1.0ms NMS per image at shape (1, 3, 352, 640)
+MultiClass --- 224.859619140625 miliseconds ---
 mentxaka@Oiers-MacBook-Pro TK-VisionArtificial % 
-
-EL MULTICLAS PARECE INDICAR QUE ES LA MEJOR OPCION DE TODAS PERO NO DETECTA LA CARA, POR LOGICA EL MAS RAPIDO ES EL MULTIHILO PERO HAY QUE ESTUDIAR EL POR QUE DEL ERROR DEL ENTRENAMIENTO
