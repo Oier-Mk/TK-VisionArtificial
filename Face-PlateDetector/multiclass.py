@@ -7,7 +7,10 @@ yoloPath = "/content/yolov5"
 
 multiclassModel = fpd.loadYolo(yoloPath)
 
-inPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
+#inPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
+#outPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/mod_Arona_persona.jpg"
+
+inPATH = "/content/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
 outPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/mod_Arona_persona.jpg"
 
 start_time = time.time()*1000

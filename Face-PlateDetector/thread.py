@@ -1,4 +1,3 @@
-from h11 import Data
 import FaceBlur.faceDetector as fd
 import PlateBlur.plateDetector as pd
 import cv2
@@ -16,7 +15,10 @@ yoloPath = "/content/yolov5"
 faceModel = fd.loadYolo(yoloPath)
 plateModel = pd.loadYolo(yoloPath)
 
-inPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
+#inPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
+#outPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/mod_Arona_persona.jpg"
+
+inPATH = "/content/TK-VisionArtificial/Face-PlateDetector/Arona_persona.jpg"
 outPATH = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/mod_Arona_persona.jpg"
 
 def plateValues(inPATH, plateModel, manager):
