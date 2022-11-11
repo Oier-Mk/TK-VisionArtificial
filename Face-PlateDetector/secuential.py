@@ -3,7 +3,8 @@ import PlateBlur.plateDetector as pd
 import cv2
 import time
 
-yoloPath = '/Users/mentxaka/yolov5' 
+#yoloPath = '/Users/mentxaka/yolov5' 
+yoloPath = "/content/yolov5"
 
 faceModel = fd.loadYolo(yoloPath)
 plateModel = pd.loadYolo(yoloPath)

@@ -10,7 +10,8 @@ class DataManager():
         self.faces = None
         self.plates = None
 
-yoloPath = '/Users/mentxaka/yolov5' 
+#yoloPath = '/Users/mentxaka/yolov5' 
+yoloPath = "/content/yolov5"
 
 faceModel = fd.loadYolo(yoloPath)
 plateModel = pd.loadYolo(yoloPath)

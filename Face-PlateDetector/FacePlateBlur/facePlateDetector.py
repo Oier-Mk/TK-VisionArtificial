@@ -5,9 +5,10 @@ import os
 import torch
 import traceback
 
-relative = os.getcwd() + os.path.sep + "Face-PlateDetector" + os.path.sep + "FacePlateBlur" #local
+#relative = os.getcwd() + os.path.sep + "Face-PlateDetector" + os.path.sep + "FacePlateBlur" #local
+relative = os.getcwd() + os.path.sep + "FacePlateBlur" #local
 
-yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
+#yoloPath = '/Users/mentxaka/yolov5' #path yolo de Oier
 #yoloPath = r"C:\Users\eneko\yolov5" #path yolo de Eneko
 
 def loadYolo(yoloPath):

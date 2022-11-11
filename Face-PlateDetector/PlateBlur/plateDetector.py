@@ -4,15 +4,12 @@
 !git clone https://github.com/ultralytics/yolov5
 !pip install -r /content/yolov5/requirements.txt
 '''
-import glob
 import torch
 import cv2
 import os
-import traceback
-import numpy as np
 
-
-relative = os.getcwd() + os.path.sep + "Face-PlateDetector" + os.path.sep + "PlateBlur" #local
+#relative = os.getcwd() + os.path.sep + "Face-PlateDetector" + os.path.sep + "PlateBlur" #local
+relative = os.getcwd() + os.path.sep + "PlateBlur" #local
 
 
 def loadYolo(yoloPath):

@@ -2,7 +2,8 @@ import FacePlateBlur.facePlateDetector as fpd
 import cv2
 import time
 
-yoloPath = '/Users/mentxaka/yolov5'
+#yoloPath = '/Users/mentxaka/yolov5' 
+yoloPath = "/content/yolov5"
 
 multiclassModel = fpd.loadYolo(yoloPath)
 
