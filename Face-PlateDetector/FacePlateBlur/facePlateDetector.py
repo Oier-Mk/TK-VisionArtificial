@@ -14,7 +14,7 @@ relative = os.getcwd() + os.path.sep + "FacePlateBlur" #local
 def loadYolo(yoloPath):
     weightsPath = relative + os.path.sep + "weights" + os.path.sep + "multiclass.pt" 
     #weightsPath = "/Users/mentxaka/Github/TK-VisionArtificial/Face-PlateDetector/FaceBlur/weights/best.pt"
-    return torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local')  # default
+    return torch.hub.load(yoloPath, 'custom', path=weightsPath, source='local',force_reload=True)  # default
 
 def multiclassDetection(path, model):
     results = model(path)
